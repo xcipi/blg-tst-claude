@@ -1,6 +1,6 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
 import { c as createComponent, b as addAttribute, f as renderHead, g as renderSlot, r as renderTemplate, d as createAstro, m as maybeRenderHead } from './astro/server_DwOUwrH7.mjs';
-/* empty css                          */
+/* empty css                         */
 
 const $$Astro$1 = createAstro();
 const $$Layout = createComponent(($$result, $$props, $$slots) => {
@@ -33,4 +33,4 @@ $ echo "© ${currentYear} — built with passion"
 </p> </div> </footer>`;
 }, "/home/skipi/Projects/blog/blg-tst-claude/src/components/Footer.astro", void 0);
 
-export { $$Layout as $, $$NavBar as a, $$Footer as b };
+export { $$NavBar as $, $$Footer as a, $$Layout as b };

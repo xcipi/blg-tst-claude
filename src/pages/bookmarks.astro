@@ -6,9 +6,18 @@ import BookmarkCard from '../components/BookmarkCard.astro';
 
 export const prerender = false; // Enable SSR for this page
 
+interface Bookmark {
+  id: number;
+  title: string;
+  url: string;
+  tags: string[];
+  date: string;
+  isPrivate: boolean;
+}
+
 const runtime = Astro.locals.runtime;
-let bookmarks = [];
-let error = null;
+let bookmarks: Bookmark[] = [];
+let error: string | null = null;
 
 // Fetch bookmarks from D1
 try {
@@ -30,6 +39,11 @@ try {
   error = 'Chyba pri načítaní bookmarkov';
   console.error(e);
 }
+
+// Get all unique tags
+const allTags = bookmarks.length > 0 
+  ? [...new Set(bookmarks.flatMap(b => b.tags))]
+  : [];
 ---
 
 <Layout title="Bookmarky - sec.blog">
@@ -54,20 +68,138 @@ try {
           <p class="text-gray-500 text-sm mt-2">Pridaj prvý bookmark cez admin panel.</p>
         </div>
       ) : (
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {bookmarks.map((bookmark: any) => (
-            <BookmarkCard
-              title={bookmark.title}
-              url={bookmark.url}
-              tags={bookmark.tags}
-              date={bookmark.date}
-              isPrivate={bookmark.isPrivate}
-            />
-          ))}
-        </div>
+        <>
+          {/* Filters */}
+          <div class="mb-8 space-y-4">
+            {/* Privacy filter */}
+            <div class="flex flex-wrap gap-2">
+              <button
+                data-privacy="all"
+                class="privacy-filter px-3 py-1 rounded-full text-xs font-mono border transition-all bg-emerald-500 text-black border-emerald-500 font-bold active"
+              >
+                Všetky
+              </button>
+              <button
+                data-privacy="public"
+                class="privacy-filter px-3 py-1 rounded-full text-xs font-mono border transition-all bg-gray-900 text-emerald-500 border-gray-800 hover:border-emerald-500"
+              >
+                Verejné
+              </button>
+              <button
+                data-privacy="private"
+                class="privacy-filter px-3 py-1 rounded-full text-xs font-mono border transition-all bg-gray-900 text-emerald-500 border-gray-800 hover:border-emerald-500"
+              >
+                Súkromné 🔒
+              </button>
+            </div>
+
+            {/* Tag filter */}
+            {allTags.length > 0 && (
+              <div class="overflow-x-auto pb-2">
+                <div class="flex gap-2 min-w-max">
+                  <button
+                    data-tag="all"
+                    class="tag-filter px-3 py-1 rounded-full text-xs font-mono border transition-all bg-emerald-500 text-black border-emerald-500 font-bold active"
+                  >
+                    all
+                  </button>
+                  {allTags.map(tag => (
+                    <button
+                      data-tag={tag}
+                      class="tag-filter px-3 py-1 rounded-full text-xs font-mono border transition-all bg-gray-900 text-emerald-500 border-gray-800 hover:border-emerald-500"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Bookmarks Grid */}
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="bookmarks-grid">
+            {bookmarks.map((bookmark) => (
+              <div 
+                class="bookmark-item" 
+                data-tags={bookmark.tags.join(',')}
+                data-privacy={bookmark.isPrivate ? 'private' : 'public'}
+              >
+                <BookmarkCard
+                  title={bookmark.title}
+                  url={bookmark.url}
+                  tags={bookmark.tags}
+                  date={bookmark.date}
+                  isPrivate={bookmark.isPrivate}
+                />
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   </main>
 
   <Footer />
 </Layout>
+
+<script>
+  // Client-side bookmark filtering
+  document.addEventListener('DOMContentLoaded', () => {
+    const privacyButtons = document.querySelectorAll('.privacy-filter');
+    const tagButtons = document.querySelectorAll('.tag-filter');
+    const bookmarkItems = document.querySelectorAll('.bookmark-item');
+
+    let activePrivacy = 'all';
+    let activeTag = 'all';
+
+    function filterBookmarks() {
+      bookmarkItems.forEach(item => {
+        const itemPrivacy = item.getAttribute('data-privacy');
+        const itemTags = item.getAttribute('data-tags')?.split(',') || [];
+
+        const privacyMatch = activePrivacy === 'all' || itemPrivacy === activePrivacy;
+        const tagMatch = activeTag === 'all' || itemTags.includes(activeTag);
+
+        if (privacyMatch && tagMatch) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+
+    // Privacy filter
+    privacyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        activePrivacy = button.getAttribute('data-privacy') || 'all';
+
+        // Update active button
+        privacyButtons.forEach(btn => {
+          btn.classList.remove('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+          btn.classList.add('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        });
+        button.classList.remove('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        button.classList.add('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+
+        filterBookmarks();
+      });
+    });
+
+    // Tag filter
+    tagButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        activeTag = button.getAttribute('data-tag') || 'all';
+
+        // Update active button
+        tagButtons.forEach(btn => {
+          btn.classList.remove('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+          btn.classList.add('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        });
+        button.classList.remove('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        button.classList.add('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+
+        filterBookmarks();
+      });
+    });
+  });
+</script>

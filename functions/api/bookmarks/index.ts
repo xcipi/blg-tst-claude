@@ -1,0 +1,85 @@
+interface Env {
+  DB: D1Database;
+}
+
+// Helper to check auth
+async function isAuthenticated(request: Request, env: Env): Promise<boolean> {
+  const cookie = request.headers.get('Cookie');
+  const sessionId = cookie?.match(/session=([^;]+)/)?.[1];
+
+  if (!sessionId) return false;
+
+  const session = await env.DB.prepare(
+    'SELECT * FROM sessions WHERE id = ? AND expires_at > datetime("now")'
+  ).bind(sessionId).first();
+
+  return !!session;
+}
+
+// GET - List bookmarks
+export const onRequestGet: PagesFunction<Env> = async (context) => {
+  try {
+    const authenticated = await isAuthenticated(context.request, context.env);
+    
+    // If authenticated, show all bookmarks, otherwise only public
+    const query = authenticated 
+      ? 'SELECT * FROM bookmarks ORDER BY created_at DESC'
+      : 'SELECT * FROM bookmarks WHERE is_private = 0 ORDER BY created_at DESC';
+
+    const result = await context.env.DB.prepare(query).all();
+    
+    const bookmarks = result.results.map((row: any) => ({
+      id: row.id,
+      title: row.title,
+      url: row.url,
+      tags: JSON.parse(row.tags),
+      isPrivate: row.is_private === 1,
+      createdAt: row.created_at
+    }));
+
+    return new Response(JSON.stringify(bookmarks), {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    console.error('Get bookmarks error:', error);
+    return new Response('Internal Server Error', { status: 500 });
+  }
+};
+
+// POST - Create bookmark (auth required)
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  try {
+    const authenticated = await isAuthenticated(context.request, context.env);
+    
+    if (!authenticated) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    const data = await context.request.json() as {
+      title: string;
+      url: string;
+      tags: string[];
+      isPrivate: boolean;
+    };
+    const { title, url, tags, isPrivate } = data;
+
+    if (!title || !url || !tags) {
+      return new Response('Missing required fields', { status: 400 });
+    }
+
+    const result = await context.env.DB.prepare(
+      'INSERT INTO bookmarks (title, url, tags, is_private) VALUES (?, ?, ?, ?)'
+    ).bind(title, url, JSON.stringify(tags), isPrivate ? 1 : 0).run();
+
+    return new Response(JSON.stringify({ 
+      id: result.meta.last_row_id,
+      success: true 
+    }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' }
+    });
+  } catch (error) {
+    console.error('Create bookmark error:', error);
+    return new Response('Internal Server Error', { status: 500 });
+  }
+};

@@ -1,0 +1,71 @@
+---
+const { currentPath } = Astro.props;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-terminal-bg border-b border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-2">
+        <span class="text-emerald-500 font-mono text-lg font-bold">&gt; sec.blog</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a
+          href="/"
+          class={`flex items-center gap-2 px-4 py-2 rounded font-mono text-sm transition-all ${
+            currentPath === '/'
+              ? 'bg-emerald-500 text-black font-bold'
+              : 'text-gray-400 hover:text-emerald-500 hover:bg-gray-900'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+          ~/home
+        </a>
+        <a
+          href="/blog"
+          class={`flex items-center gap-2 px-4 py-2 rounded font-mono text-sm transition-all ${
+            currentPath.startsWith('/blog')
+              ? 'bg-emerald-500 text-black font-bold'
+              : 'text-gray-400 hover:text-emerald-500 hover:bg-gray-900'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+          </svg>
+          ~/blog
+        </a>
+        <a
+          href="/bookmarks"
+          class={`flex items-center gap-2 px-4 py-2 rounded font-mono text-sm transition-all ${
+            currentPath === '/bookmarks'
+              ? 'bg-emerald-500 text-black font-bold'
+              : 'text-gray-400 hover:text-emerald-500 hover:bg-gray-900'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+          </svg>
+          ~/bookmarks
+        </a>
+        <a
+          href="/login"
+          class={`flex items-center gap-2 px-4 py-2 rounded font-mono text-sm transition-all ${
+            currentPath === '/login'
+              ? 'bg-emerald-500 text-black font-bold'
+              : 'text-gray-400 hover:text-emerald-500 hover:bg-gray-900'
+          }`}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+            <polyline points="10 17 15 12 10 7"></polyline>
+            <line x1="15" x2="3" y1="12" y2="12"></line>
+          </svg>
+          login
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

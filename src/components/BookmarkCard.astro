@@ -8,6 +8,12 @@ interface Props {
 }
 
 const { title, url, tags, date, isPrivate } = Astro.props;
+
+
+// Fix URL - pridaj https:// ak chýba
+const fixedUrl = url.startsWith('http://') || url.startsWith('https://') 
+  ? url 
+  : `https://${url}`;
 ---
 
 <div class="bg-terminal-card border border-gray-800 rounded-lg p-4 hover:border-emerald-500 transition-all">
@@ -26,7 +32,7 @@ const { title, url, tags, date, isPrivate } = Astro.props;
       </svg>
     )}
   </div>
-  <a href={url} target="_blank" rel="noopener noreferrer" class="text-emerald-500 text-sm hover:underline mb-3 block font-mono">
+  <a href={fixedUrl} target="_blank" rel="noopener noreferrer" class="text-emerald-500 text-sm hover:underline mb-3 block font-mono">
     {url}
   </a>
   <div class="flex flex-wrap gap-2 mb-3">

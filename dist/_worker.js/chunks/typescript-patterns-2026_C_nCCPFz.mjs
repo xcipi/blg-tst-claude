@@ -1,0 +1,13 @@
+globalThis.process ??= {}; globalThis.process.env ??= {};
+const id = "typescript-patterns-2026.md";
+						const collection = "blog";
+						const slug = "typescript-patterns-2026";
+						const body = "\n## Discriminated Unions\n\nJeden z najužitočnejších patternov pre type-safe state management.\n\n```typescript\ntype LoadingState = \n  | { status: 'idle' }\n  | { status: 'loading' }\n  | { status: 'success'; data: User[] }\n  | { status: 'error'; error: string };\n\nfunction renderUsers(state: LoadingState) {\n  switch (state.status) {\n    case 'idle':\n      return 'Click to load';\n    case 'loading':\n      return 'Loading...';\n    case 'success':\n      return state.data.map(u => u.name); // TypeScript vie že máš data\n    case 'error':\n      return `Error: ${state.error}`;\n  }\n}\n```\n\n## Branded Types\n\nPre silnejšiu type safety pri primitívnych typoch.\n\n```typescript\ntype UserId = string & { readonly __brand: 'UserId' };\ntype Email = string & { readonly __brand: 'Email' };\n\nfunction getUserById(id: UserId) { /* ... */ }\nfunction sendEmail(email: Email) { /* ... */ }\n\nconst id = 'abc123' as UserId;\nconst email = 'user@example.com' as Email;\n\ngetUserById(id); // OK\ngetUserById(email); // Error!\n```\n\n## Const Assertions\n\nPre readonly objekty a presné typy.\n\n```typescript\nconst config = {\n  api: 'https://api.example.com',\n  timeout: 5000,\n  retries: 3\n} as const;\n\n// config.api = 'new'; // Error! readonly\ntype Config = typeof config; // presné typy, nie string\n```\n\n## Template Literal Types\n\nPre type-safe string manipuláciu.\n\n```typescript\ntype HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';\ntype Endpoint = `/api/${string}`;\ntype Route = `${HTTPMethod} ${Endpoint}`;\n\nconst route: Route = 'GET /api/users'; // OK\nconst invalid: Route = 'PATCH /users'; // Error!\n```\n\n## Utility Types\n\nKombinácia utility typov pre DRY kód.\n\n```typescript\ninterface User {\n  id: string;\n  name: string;\n  email: string;\n  password: string;\n}\n\ntype PublicUser = Omit<User, 'password'>;\ntype UserUpdate = Partial<Pick<User, 'name' | 'email'>>;\ntype UserCreate = Omit<User, 'id'>;\n```\n";
+						const data = {title:"TypeScript Patterns pre rok 2026",excerpt:"Osvedčené TypeScript patterny, ktoré používam v každodennej práci. Discriminated unions, branded types a ďalšie.",date:"2026-01-15",readTime:"6 min",tags:["typescript","frontend","patterns"]};
+						const _internal = {
+							type: 'content',
+							filePath: "/home/skipi/Projects/blog/blg-tst-claude/src/content/blog/typescript-patterns-2026.md",
+							rawData: undefined,
+						};
+
+export { _internal, body, collection, data, id, slug };

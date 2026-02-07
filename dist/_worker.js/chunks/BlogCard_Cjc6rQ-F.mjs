@@ -1,5 +1,5 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
-import { c as createComponent, m as maybeRenderHead, d as addAttribute, a as renderTemplate, b as createAstro } from './astro/server_D0EvRT28.mjs';
+import { c as createComponent, m as maybeRenderHead, a as addAttribute, r as renderTemplate, b as createAstro } from './astro/server_BMvcBqdl.mjs';
 
 const $$Astro = createAstro();
 const $$BlogCard = createComponent(($$result, $$props, $$slots) => {

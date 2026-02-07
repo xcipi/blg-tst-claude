@@ -4,16 +4,6 @@ globalThis.process ??= {}; globalThis.process.env ??= {};
  * @param {ArrayBuffer} arraybuffer
  * @returns {string}
  */
-function encode64(arraybuffer) {
-  const dv = new DataView(arraybuffer);
-  let binaryString = "";
-
-  for (let i = 0; i < arraybuffer.byteLength; i++) {
-    binaryString += String.fromCharCode(dv.getUint8(i));
-  }
-
-  return binaryToAscii(binaryString);
-}
 
 /**
  * Decodes a base64 string into an arraybuffer
@@ -73,41 +63,6 @@ function asciiToBinary(data) {
     output += String.fromCharCode(buffer & 0xff);
   }
   return output;
-}
-
-/**
- * Substitute for btoa since it's deprecated in node.
- * Does not do any input validation.
- *
- * @see https://github.com/jsdom/abab/blob/master/lib/btoa.js
- *
- * @param {string} str
- * @returns {string}
- */
-function binaryToAscii(str) {
-  let out = "";
-  for (let i = 0; i < str.length; i += 3) {
-    /** @type {[number, number, number, number]} */
-    const groupsOfSix = [undefined, undefined, undefined, undefined];
-    groupsOfSix[0] = str.charCodeAt(i) >> 2;
-    groupsOfSix[1] = (str.charCodeAt(i) & 0x03) << 4;
-    if (str.length > i + 1) {
-      groupsOfSix[1] |= str.charCodeAt(i + 1) >> 4;
-      groupsOfSix[2] = (str.charCodeAt(i + 1) & 0x0f) << 2;
-    }
-    if (str.length > i + 2) {
-      groupsOfSix[2] |= str.charCodeAt(i + 2) >> 6;
-      groupsOfSix[3] = str.charCodeAt(i + 2) & 0x3f;
-    }
-    for (let j = 0; j < groupsOfSix.length; j++) {
-      if (typeof groupsOfSix[j] === "undefined") {
-        out += "=";
-      } else {
-        out += KEY_STRING[groupsOfSix[j]];
-      }
-    }
-  }
-  return out;
 }
 
 const UNDEFINED = -1;
@@ -342,4 +297,4 @@ function unflatten(parsed, revivers) {
 	return hydrate(0);
 }
 
-export { HOLE as H, NAN as N, POSITIVE_INFINITY as P, UNDEFINED as U, NEGATIVE_INFINITY as a, NEGATIVE_ZERO as b, encode64 as e, parse as p, unflatten as u };
+export { parse as p, unflatten as u };

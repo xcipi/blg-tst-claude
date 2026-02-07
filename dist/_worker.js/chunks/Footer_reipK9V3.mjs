@@ -1,5 +1,5 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
-import { c as createComponent, d as addAttribute, k as renderHead, l as renderSlot, a as renderTemplate, b as createAstro, m as maybeRenderHead } from './astro/server_D0EvRT28.mjs';
+import { c as createComponent, a as addAttribute, e as renderHead, f as renderSlot, r as renderTemplate, b as createAstro, m as maybeRenderHead } from './astro/server_BMvcBqdl.mjs';
 /* empty css                          */
 
 const $$Astro$1 = createAstro();

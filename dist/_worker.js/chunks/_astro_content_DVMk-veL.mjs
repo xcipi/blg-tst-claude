@@ -1,8 +1,7 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
-import { o as objectType, e as dateType, f as arrayType, s as stringType, A as AstroError, U as UnknownContentCollectionError, c as createComponent, R as RenderUndefinedEntryError, u as unescapeHTML, a as renderTemplate, g as escape, h as renderUniqueStylesheet, i as renderScriptElement, j as createHeadAndContent, r as renderComponent } from './astro/server_D0EvRT28.mjs';
-import { r as removeBase, i as isRemotePath, p as prependForwardSlash } from './path_BgNISshD.mjs';
-import { V as VALID_INPUT_FORMATS } from './consts_DBS1dnOp.mjs';
-import { u as unflatten } from './parse_DGrrK2jG.mjs';
+import { r as removeBase, i as isCoreRemotePath, V as VALID_INPUT_FORMATS, p as prependForwardSlash } from './astro/assets-service_Cdp88OxU.mjs';
+import { A as AstroError, U as UnknownContentCollectionError, c as createComponent, i as renderUniqueStylesheet, j as renderScriptElement, k as createHeadAndContent, d as renderComponent, r as renderTemplate, u as unescapeHTML } from './astro/server_BMvcBqdl.mjs';
+import { u as unflatten } from './parse_DqSI_75p.mjs';
 
 var e=e=>Object.prototype.toString.call(e),t=e=>ArrayBuffer.isView(e)&&!(e instanceof DataView),o=t=>"[object Date]"===e(t),n=t=>"[object RegExp]"===e(t),r=t=>"[object Error]"===e(t),s=t=>"[object Boolean]"===e(t),l=t=>"[object Number]"===e(t),i=t=>"[object String]"===e(t),c=Array.isArray,u=Object.getOwnPropertyDescriptor,a=Object.prototype.propertyIsEnumerable,f=Object.getOwnPropertySymbols,p=Object.prototype.hasOwnProperty,h=Object.keys;function d(e){const t=h(e),o=f(e);for(let n=0;n<o.length;n++)a.call(e,o[n])&&t.push(o[n]);return t}function b(e,t){return !u(e,t)?.writable}function y(e,u){if("object"==typeof e&&null!==e){let a;if(c(e))a=[];else if(o(e))a=new Date(e.getTime?e.getTime():e);else if(n(e))a=new RegExp(e);else if(r(e))a={message:e.message};else if(s(e)||l(e)||i(e))a=Object(e);else {if(t(e))return e.slice();a=Object.create(Object.getPrototypeOf(e));}const f=u.includeSymbols?d:h;for(const t of f(e))a[t]=e[t];return a}return e}var g={includeSymbols:false,immutable:false};function m(e,t,o=g){const n=[],r=[];let s=true;const l=o.includeSymbols?d:h,i=!!o.immutable;return function e(u){const a=i?y(u,o):u,f={};let h=true;const d={node:a,node_:u,path:[].concat(n),parent:r[r.length-1],parents:r,key:n[n.length-1],isRoot:0===n.length,level:n.length,circular:void 0,isLeaf:false,notLeaf:true,notRoot:true,isFirst:false,isLast:false,update:function(e,t=false){d.isRoot||(d.parent.node[d.key]=e),d.node=e,t&&(h=false);},delete:function(e){delete d.parent.node[d.key],e&&(h=false);},remove:function(e){c(d.parent.node)?d.parent.node.splice(d.key,1):delete d.parent.node[d.key],e&&(h=false);},keys:null,before:function(e){f.before=e;},after:function(e){f.after=e;},pre:function(e){f.pre=e;},post:function(e){f.post=e;},stop:function(){s=false;},block:function(){h=false;}};if(!s)return d;function g(){if("object"==typeof d.node&&null!==d.node){d.keys&&d.node_===d.node||(d.keys=l(d.node)),d.isLeaf=0===d.keys.length;for(let e=0;e<r.length;e++)if(r[e].node_===u){d.circular=r[e];break}}else d.isLeaf=true,d.keys=null;d.notLeaf=!d.isLeaf,d.notRoot=!d.isRoot;}g();const m=t(d,d.node);if(void 0!==m&&d.update&&d.update(m),f.before&&f.before(d,d.node),!h)return d;if("object"==typeof d.node&&null!==d.node&&!d.circular){r.push(d),g();for(const[t,o]of Object.entries(d.keys??[])){n.push(o),f.pre&&f.pre(d,d.node[o],o);const r=e(d.node[o]);i&&p.call(d.node,o)&&!b(d.node,o)&&(d.node[o]=r.node),r.isLast=!!d.keys?.length&&+t==d.keys.length-1,r.isFirst=0==+t,f.post&&f.post(d,r),n.pop();}r.pop();}return f.after&&f.after(d,d.node),d}(e).node}var j=class{#e;#t;constructor(e,t=g){this.#e=e,this.#t=t;}get(e){let t=this.#e;for(let o=0;t&&o<e.length;o++){const n=e[o];if(!p.call(t,n)||!this.#t.includeSymbols&&"symbol"==typeof n)return;t=t[n];}return t}has(e){let t=this.#e;for(let o=0;t&&o<e.length;o++){const n=e[o];if(!p.call(t,n)||!this.#t.includeSymbols&&"symbol"==typeof n)return  false;t=t[n];}return  true}set(e,t){let o=this.#e,n=0;for(n=0;n<e.length-1;n++){const t=e[n];p.call(o,t)||(o[t]={}),o=o[t];}return o[e[n]]=t,t}map(e){return m(this.#e,e,{immutable:true,includeSymbols:!!this.#t.includeSymbols})}forEach(e){return this.#e=m(this.#e,e,this.#t),this.#e}reduce(e,t){const o=1===arguments.length;let n=o?this.#e:t;return this.forEach(((t,r)=>{t.isRoot&&o||(n=e(t,n,r));})),n}paths(){const e=[];return this.forEach((t=>{e.push(t.path);})),e}nodes(){const e=[];return this.forEach((t=>{e.push(t.node);})),e}clone(){const e=[],o=[],n=this.#t;return t(this.#e)?this.#e.slice():function t(r){for(let t=0;t<e.length;t++)if(e[t]===r)return o[t];if("object"==typeof r&&null!==r){const s=y(r,n);e.push(r),o.push(s);const l=n.includeSymbols?d:h;for(const e of l(r))s[e]=t(r[e]);return e.pop(),o.pop(),s}return r}(this.#e)}};
 
@@ -198,10 +197,10 @@ const IMAGE_IMPORT_PREFIX = "__ASTRO_IMAGE_";
 
 function imageSrcToImportId(imageSrc, filePath) {
   imageSrc = removeBase(imageSrc, IMAGE_IMPORT_PREFIX);
-  if (isRemotePath(imageSrc)) {
+  if (isCoreRemotePath(imageSrc)) {
     return;
   }
-  const ext = imageSrc.split(".").at(-1)?.toLowerCase();
+  const ext = imageSrc.split(".").at(-1);
   if (!ext || !VALID_INPUT_FORMATS.includes(ext)) {
     return;
   }
@@ -212,7 +211,7 @@ function imageSrcToImportId(imageSrc, filePath) {
   return `${imageSrc}?${params.toString()}`;
 }
 
-class ImmutableDataStore {
+class DataStore {
   _collections = /* @__PURE__ */ new Map();
   constructor() {
     this._collections = /* @__PURE__ */ new Map();
@@ -251,18 +250,18 @@ class ImmutableDataStore {
    */
   static async fromModule() {
     try {
-      const data = await import('./_astro_data-layer-content_8qvDNodY.mjs');
+      const data = await import('./_astro_data-layer-content_tqJQiZwR.mjs');
       if (data.default instanceof Map) {
-        return ImmutableDataStore.fromMap(data.default);
+        return DataStore.fromMap(data.default);
       }
       const map = unflatten(data.default);
-      return ImmutableDataStore.fromMap(map);
+      return DataStore.fromMap(map);
     } catch {
     }
-    return new ImmutableDataStore();
+    return new DataStore();
   }
   static async fromMap(data) {
-    const store = new ImmutableDataStore();
+    const store = new DataStore();
     store._collections = data;
     return store;
   }
@@ -272,7 +271,7 @@ function dataStoreSingleton() {
   return {
     get: async () => {
       if (!instance) {
-        instance = ImmutableDataStore.fromModule();
+        instance = DataStore.fromModule();
       }
       return instance;
     },
@@ -299,24 +298,13 @@ function createCollectionToGlobResultMap({
   }
   return collectionToGlobResultMap;
 }
-objectType({
-  tags: arrayType(stringType()).optional(),
-  lastModified: dateType().optional()
-});
 function createGetCollection({
   contentCollectionToEntryMap,
   dataCollectionToEntryMap,
   getRenderEntryImport,
-  cacheEntriesByCollection,
-  liveCollections
+  cacheEntriesByCollection
 }) {
   return async function getCollection(collection, filter) {
-    if (collection in liveCollections) {
-      throw new AstroError({
-        ...UnknownContentCollectionError,
-        message: `Collection "${collection}" is a live collection. Use getLiveCollection() instead of getCollection().`
-      });
-    }
     const hasFilter = typeof filter === "function";
     const store = await globalDataStore.get();
     let type;
@@ -325,18 +313,15 @@ function createGetCollection({
     } else if (collection in dataCollectionToEntryMap) {
       type = "data";
     } else if (store.hasCollection(collection)) {
-      const { default: imageAssetMap } = await import('./content-assets_XqCgPAV2.mjs');
+      const { default: imageAssetMap } = await import('./_astro_asset-imports_Dno0vHp6.mjs');
       const result = [];
       for (const rawEntry of store.values(collection)) {
         const data = updateImageReferencesInData(rawEntry.data, rawEntry.filePath, imageAssetMap);
-        let entry = {
+        const entry = {
           ...rawEntry,
           data,
           collection
         };
-        if (entry.legacyId) {
-          entry = emulateLegacyEntry(entry);
-        }
         if (hasFilter && !filter(entry)) {
           continue;
         }
@@ -347,7 +332,7 @@ function createGetCollection({
       console.warn(
         `The collection ${JSON.stringify(
           collection
-        )} does not exist or is empty. Please check your content config file for errors.`
+        )} does not exist or is empty. Ensure a collection directory with this name exists.`
       );
       return [];
     }
@@ -393,57 +378,6 @@ function createGetCollection({
     }
   };
 }
-function emulateLegacyEntry({ legacyId, ...entry }) {
-  const legacyEntry = {
-    ...entry,
-    id: legacyId,
-    slug: entry.id
-  };
-  return {
-    ...legacyEntry,
-    // Define separately so the render function isn't included in the object passed to `renderEntry()`
-    render: () => renderEntry(legacyEntry)
-  };
-}
-const CONTENT_LAYER_IMAGE_REGEX = /__ASTRO_IMAGE_="([^"]+)"/g;
-async function updateImageReferencesInBody(html, fileName) {
-  const { default: imageAssetMap } = await import('./content-assets_XqCgPAV2.mjs');
-  const imageObjects = /* @__PURE__ */ new Map();
-  const { getImage } = await import('./_astro_assets_BLiuC_HP.mjs').then(n => n._);
-  for (const [_full, imagePath] of html.matchAll(CONTENT_LAYER_IMAGE_REGEX)) {
-    try {
-      const decodedImagePath = JSON.parse(imagePath.replaceAll("&#x22;", '"'));
-      let image;
-      if (URL.canParse(decodedImagePath.src)) {
-        image = await getImage(decodedImagePath);
-      } else {
-        const id = imageSrcToImportId(decodedImagePath.src, fileName);
-        const imported = imageAssetMap.get(id);
-        if (!id || imageObjects.has(id) || !imported) {
-          continue;
-        }
-        image = await getImage({ ...decodedImagePath, src: imported });
-      }
-      imageObjects.set(imagePath, image);
-    } catch {
-      throw new Error(`Failed to parse image reference: ${imagePath}`);
-    }
-  }
-  return html.replaceAll(CONTENT_LAYER_IMAGE_REGEX, (full, imagePath) => {
-    const image = imageObjects.get(imagePath);
-    if (!image) {
-      return full;
-    }
-    const { index, ...attributes } = image.attributes;
-    return Object.entries({
-      ...attributes,
-      src: image.src,
-      srcset: image.srcSet.attribute,
-      // This attribute is used by the toolbar audit
-      ...Object.assign(__vite_import_meta_env__, { _: process.env._ }).DEV ? { "data-image-component": "true" } : {}
-    }).map(([key, value]) => value ? `${key}="${escape(value)}"` : "").join(" ");
-  });
-}
 function updateImageReferencesInData(data, fileName, imageAssetMap) {
   return new j(data).map(function(ctx, val) {
     if (typeof val === "string" && val.startsWith(IMAGE_IMPORT_PREFIX)) {
@@ -461,34 +395,6 @@ function updateImageReferencesInData(data, fileName, imageAssetMap) {
       }
     }
   });
-}
-async function renderEntry(entry) {
-  if (!entry) {
-    throw new AstroError(RenderUndefinedEntryError);
-  }
-  if ("render" in entry && !("legacyId" in entry)) {
-    return entry.render();
-  }
-  if (entry.deferredRender) {
-    try {
-      const { default: contentModules } = await import('./content-modules_Bvq7llv8.mjs');
-      const renderEntryImport = contentModules.get(entry.filePath);
-      return render({
-        collection: "",
-        id: entry.id,
-        renderEntryImport
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  }
-  const html = entry?.rendered?.metadata?.imagePaths?.length && entry.filePath ? await updateImageReferencesInBody(entry.rendered.html, entry.filePath) : entry?.rendered?.html;
-  const Content = createComponent(() => renderTemplate`${unescapeHTML(html)}`);
-  return {
-    Content,
-    headings: entry?.rendered?.metadata?.headings ?? [],
-    remarkPluginFrontmatter: entry?.rendered?.metadata?.frontmatter ?? {}
-  };
 }
 async function render({
   collection,
@@ -523,7 +429,7 @@ async function render({
           links = collectedLinks.map((link) => {
             return renderUniqueStylesheet(result, {
               type: "external",
-              src: isRemotePath(link) ? link : prependForwardSlash(link)
+              src: prependForwardSlash(link)
             });
           }).join("");
         }
@@ -571,17 +477,15 @@ function isPropagatedAssetsModule(module) {
 
 // astro-head-inject
 
-const liveCollections = {};
-
 const contentDir = '/src/content/';
 
-const contentEntryGlob = "";
+const contentEntryGlob = /* #__PURE__ */ Object.assign({"/src/content/blog/kubernetes-production-checklist.md": () => import('./kubernetes-production-checklist_BnqxFrn5.mjs'),"/src/content/blog/neovim-setup.md": () => import('./neovim-setup_eEbBkcb8.mjs'),"/src/content/blog/typescript-patterns-2026.md": () => import('./typescript-patterns-2026_C_nCCPFz.mjs')});
 const contentCollectionToEntryMap = createCollectionToGlobResultMap({
 	globResult: contentEntryGlob,
 	contentDir,
 });
 
-const dataEntryGlob = "";
+const dataEntryGlob = /* #__PURE__ */ Object.assign({});
 const dataCollectionToEntryMap = createCollectionToGlobResultMap({
 	globResult: dataEntryGlob,
 	contentDir,
@@ -592,7 +496,7 @@ createCollectionToGlobResultMap({
 });
 
 let lookupMap = {};
-lookupMap = {};
+lookupMap = {"blog":{"type":"content","entries":{"kubernetes-production-checklist":"/src/content/blog/kubernetes-production-checklist.md","neovim-setup":"/src/content/blog/neovim-setup.md","typescript-patterns-2026":"/src/content/blog/typescript-patterns-2026.md"}}};
 
 new Set(Object.keys(lookupMap));
 
@@ -605,7 +509,7 @@ function createGlobLookup(glob) {
 	};
 }
 
-const renderEntryGlob = "";
+const renderEntryGlob = /* #__PURE__ */ Object.assign({"/src/content/blog/kubernetes-production-checklist.md": () => import('./kubernetes-production-checklist_C9_O6qO7.mjs'),"/src/content/blog/neovim-setup.md": () => import('./neovim-setup_DKBfV_eP.mjs'),"/src/content/blog/typescript-patterns-2026.md": () => import('./typescript-patterns-2026_Bo_fwA1c.mjs')});
 const collectionToRenderEntryMap = createCollectionToGlobResultMap({
 	globResult: renderEntryGlob,
 	contentDir,
@@ -617,7 +521,6 @@ const getCollection = createGetCollection({
 	dataCollectionToEntryMap,
 	getRenderEntryImport: createGlobLookup(collectionToRenderEntryMap),
 	cacheEntriesByCollection,
-	liveCollections,
 });
 
 export { getCollection as g };

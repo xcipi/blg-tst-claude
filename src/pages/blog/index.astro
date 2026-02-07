@@ -26,12 +26,13 @@ const allTags = ['all', ...new Set(sortedPosts.flatMap(post => post.data.tags))]
 
       <!-- Tags Filter -->
       <div class="mb-8 overflow-x-auto pb-2">
-        <div class="flex gap-2 min-w-max">
+        <div class="flex gap-2 min-w-max" id="tag-filters">
           {allTags.map((tag, i) => (
             <button
-              class={`px-3 py-1 rounded-full text-xs font-mono border transition-all ${
+              data-tag={tag}
+              class={`tag-filter px-3 py-1 rounded-full text-xs font-mono border transition-all ${
                 i === 0
-                  ? 'bg-emerald-500 text-black border-emerald-500 font-bold'
+                  ? 'bg-emerald-500 text-black border-emerald-500 font-bold active'
                   : 'bg-gray-900 text-emerald-500 border-gray-800 hover:border-emerald-500'
               }`}
             >
@@ -42,16 +43,18 @@ const allTags = ['all', ...new Set(sortedPosts.flatMap(post => post.data.tags))]
       </div>
 
       <!-- Blog Posts Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="blog-grid">
         {sortedPosts.map((post) => (
-          <BlogCard
-            title={post.data.title}
-            excerpt={post.data.excerpt}
-            tags={post.data.tags}
-            date={post.data.date}
-            readTime={post.data.readTime}
-            slug={post.slug}
-          />
+          <div class="blog-post" data-tags={post.data.tags.join(',')}>
+            <BlogCard
+              title={post.data.title}
+              excerpt={post.data.excerpt}
+              tags={post.data.tags}
+              date={post.data.date}
+              readTime={post.data.readTime}
+              slug={post.slug}
+            />
+          </div>
         ))}
       </div>
     </div>
@@ -59,3 +62,36 @@ const allTags = ['all', ...new Set(sortedPosts.flatMap(post => post.data.tags))]
 
   <Footer />
 </Layout>
+
+<script>
+  // Client-side tag filtering
+  document.addEventListener('DOMContentLoaded', () => {
+    const tagButtons = document.querySelectorAll('.tag-filter');
+    const blogPosts = document.querySelectorAll('.blog-post');
+
+    tagButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedTag = button.getAttribute('data-tag');
+
+        // Update active button
+        tagButtons.forEach(btn => {
+          btn.classList.remove('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+          btn.classList.add('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        });
+        button.classList.remove('bg-gray-900', 'text-emerald-500', 'border-gray-800');
+        button.classList.add('bg-emerald-500', 'text-black', 'border-emerald-500', 'font-bold', 'active');
+
+        // Filter posts
+        blogPosts.forEach(post => {
+          const postTags = post.getAttribute('data-tags').split(',');
+          
+          if (selectedTag === 'all' || postTags.includes(selectedTag)) {
+            post.style.display = 'block';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

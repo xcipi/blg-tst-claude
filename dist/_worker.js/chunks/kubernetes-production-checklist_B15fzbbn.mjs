@@ -1,6 +1,6 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
 async function getMod() {
-						return import('./kubernetes-production-checklist_Cvyx40cG.mjs');
+						return import('./kubernetes-production-checklist_8tD5AZ3x.mjs');
 					}
 					const collectedLinks = [];
 					const collectedStyles = [];

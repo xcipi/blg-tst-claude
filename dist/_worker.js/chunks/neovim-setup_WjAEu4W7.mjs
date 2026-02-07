@@ -1,6 +1,6 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
 async function getMod() {
-						return import('./typescript-patterns-2026_4ZoiJD1V.mjs');
+						return import('./neovim-setup_zZEcU8Mp.mjs');
 					}
 					const collectedLinks = [];
 					const collectedStyles = [];

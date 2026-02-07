@@ -4,7 +4,10 @@
     "/*"
   ],
   "exclude": [
-    "/_astro/*",
-    "/favicon.svg"
+    "/blog/kubernetes-production-checklist",
+    "/blog/neovim-setup",
+    "/blog/typescript-patterns-2026",
+    "/favicon.svg",
+    "/_astro/*"
   ]
 }

@@ -1,7 +1,7 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
 /* empty css                                  */
-import { c as createComponent, d as renderComponent, r as renderTemplate, b as createAstro, m as maybeRenderHead } from '../chunks/astro/server_BMvcBqdl.mjs';
-import { $ as $$Layout, a as $$NavBar, b as $$Footer } from '../chunks/Footer_reipK9V3.mjs';
+import { c as createComponent, e as renderComponent, r as renderTemplate, d as createAstro, m as maybeRenderHead } from '../chunks/astro/server_DwOUwrH7.mjs';
+import { $ as $$Layout, a as $$NavBar, b as $$Footer } from '../chunks/Footer_DLnRzgEs.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro = createAstro();

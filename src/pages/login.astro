@@ -2,9 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
+
+const error = Astro.url.searchParams.get('error');
+
+const errorMessages: Record<string, string> = {
+  missing: 'Vyplň username a heslo',
+  invalid: 'Nesprávne prihlasovacie údaje',
+  server: 'Serverová chyba, skús to znova'
+};
+
+const errorMessage = error ? errorMessages[error] : null;
 ---
 
-<Layout title="Login - sec.blog">
+<Layout title="Admin Login - sec.blog">
   <NavBar currentPath={Astro.url.pathname} />
   
   <main class="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
@@ -15,6 +25,12 @@ import Footer from '../components/Footer.astro';
         <p class="text-gray-400">Prihlásenie pre správcu obsahu</p>
       </div>
 
+      {errorMessage && (
+        <div class="mb-6 bg-red-900/20 border border-red-500 rounded-lg p-4 text-center">
+          <p class="text-red-400 font-mono text-sm">{errorMessage}</p>
+        </div>
+      )}
+
       <div class="bg-terminal-card border border-gray-800 rounded-lg p-8">
         <form method="POST" action="/api/auth/login" class="space-y-4">
           <div>
@@ -23,6 +39,7 @@ import Footer from '../components/Footer.astro';
               type="text"
               name="username"
               required
+              autocomplete="username"
               class="w-full bg-gray-900 border border-gray-800 rounded px-4 py-2 text-white font-mono focus:border-emerald-500 focus:outline-none"
               placeholder="admin"
             />
@@ -33,6 +50,7 @@ import Footer from '../components/Footer.astro';
               type="password"
               name="password"
               required
+              autocomplete="current-password"
               class="w-full bg-gray-900 border border-gray-800 rounded px-4 py-2 text-white font-mono focus:border-emerald-500 focus:outline-none"
               placeholder="••••••••"
             />
@@ -44,12 +62,10 @@ import Footer from '../components/Footer.astro';
             Login →
           </button>
         </form>
-        
-        <div class="mt-6 p-4 bg-emerald-500/10 border border-emerald-500/30 rounded">
-          <p class="text-emerald-400 text-sm font-mono">
-            💡 Demo credentials:<br/>
-            username: <strong>admin</strong><br/>
-            password: <strong>admin123</strong>
+
+        <div class="mt-6 pt-6 border-t border-gray-800">
+          <p class="text-gray-500 text-xs font-mono text-center">
+            Default credentials: admin / admin123
           </p>
         </div>
       </div>

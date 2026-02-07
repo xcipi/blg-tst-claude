@@ -1,17 +1,25 @@
 interface Env {
   DB: D1Database;
-  SESSIONS: KVNamespace;
+  ADMIN_USERNAME?: string;
+  ADMIN_PASSWORD?: string;
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   try {
     const formData = await context.request.formData();
-    const username = formData.get('username');
-    const password = formData.get('password');
+    const username = formData.get('username')?.toString();
+    const password = formData.get('password')?.toString();
 
-    // Simple auth - v produkcii použi bcrypt a ENV variables
-    const ADMIN_USERNAME = 'admin';
-    const ADMIN_PASSWORD = 'admin123';
+    if (!username || !password) {
+      return new Response(null, {
+        status: 302,
+        headers: { 'Location': '/login?error=missing' }
+      });
+    }
+
+    // Get credentials from ENV (with fallback for development)
+    const ADMIN_USERNAME = context.env.ADMIN_USERNAME || 'admin';
+    const ADMIN_PASSWORD = context.env.ADMIN_PASSWORD || 'admin123';
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       // Create session
@@ -27,7 +35,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         status: 302,
         headers: {
           'Location': '/admin',
-          'Set-Cookie': `session=${sessionId}; HttpOnly; Secure; SameSite=Strict; Max-Age=86400; Path=/`
+          'Set-Cookie': `session=${sessionId}; HttpOnly; Secure; SameSite=Lax; Max-Age=86400; Path=/`
         }
       });
     }
@@ -41,6 +49,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response(null, {
+      status: 302,
+      headers: { 'Location': '/login?error=server' }
+    });
   }
 };

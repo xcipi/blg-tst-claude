@@ -124,11 +124,78 @@ const PageNumberParamNotFound = {
   message: (paramName) => `[paginate()] page number param \`${paramName}\` not found in your filepath.`,
   hint: "Rename your file to `[page].astro` or `[...page].astro`."
 };
+const ImageMissingAlt = {
+  name: "ImageMissingAlt",
+  title: 'Image missing required "alt" property.',
+  message: 'Image missing "alt" property. "alt" text is required to describe important images on the page.',
+  hint: 'Use an empty string ("") for decorative images.'
+};
+const InvalidImageService = {
+  name: "InvalidImageService",
+  title: "Error while loading image service.",
+  message: "There was an error loading the configured image service. Please see the stack trace for more information."
+};
+const MissingImageDimension = {
+  name: "MissingImageDimension",
+  title: "Missing image dimensions",
+  message: (missingDimension, imageURL) => `Missing ${missingDimension === "both" ? "width and height attributes" : `${missingDimension} attribute`} for ${imageURL}. When using remote images, both dimensions are required in order to avoid CLS.`,
+  hint: "If your image is inside your `src` folder, you probably meant to import it instead. See [the Imports guide for more information](https://docs.astro.build/en/guides/imports/#other-assets). You can also use `inferSize={true}` for remote images to get the original dimensions."
+};
+const FailedToFetchRemoteImageDimensions = {
+  name: "FailedToFetchRemoteImageDimensions",
+  title: "Failed to retrieve remote image dimensions",
+  message: (imageURL) => `Failed to get the dimensions for ${imageURL}.`,
+  hint: "Verify your remote image URL is accurate, and that you are not using `inferSize` with a file located in your `public/` folder."
+};
+const UnsupportedImageFormat = {
+  name: "UnsupportedImageFormat",
+  title: "Unsupported image format",
+  message: (format, imagePath, supportedFormats) => `Received unsupported format \`${format}\` from \`${imagePath}\`. Currently only ${supportedFormats.join(
+    ", "
+  )} are supported by our image services.`,
+  hint: "Using an `img` tag directly instead of the `Image` component might be what you're looking for."
+};
+const UnsupportedImageConversion = {
+  name: "UnsupportedImageConversion",
+  title: "Unsupported image conversion",
+  message: "Converting between vector (such as SVGs) and raster (such as PNGs and JPEGs) images is not currently supported."
+};
 const PrerenderDynamicEndpointPathCollide = {
   name: "PrerenderDynamicEndpointPathCollide",
   title: "Prerendered dynamic endpoint has path collision.",
   message: (pathname) => `Could not render \`${pathname}\` with an \`undefined\` param as the generated path will collide during prerendering. Prevent passing \`undefined\` as \`params\` for the endpoint's \`getStaticPaths()\` function, or add an additional extension to the endpoint's filename.`,
   hint: (filename) => `Rename \`${filename}\` to \`${filename.replace(/\.(?:js|ts)/, (m) => `.json` + m)}\``
+};
+const ExpectedImage = {
+  name: "ExpectedImage",
+  title: "Expected src to be an image.",
+  message: (src, typeofOptions, fullOptions) => `Expected \`src\` property for \`getImage\` or \`<Image />\` to be either an ESM imported image or a string with the path of a remote image. Received \`${src}\` (type: \`${typeofOptions}\`).
+
+Full serialized options received: \`${fullOptions}\`.`,
+  hint: "This error can often happen because of a wrong path. Make sure the path to your image is correct. If you're passing an async function, make sure to call and await it."
+};
+const ExpectedImageOptions = {
+  name: "ExpectedImageOptions",
+  title: "Expected image options.",
+  message: (options) => `Expected getImage() parameter to be an object. Received \`${options}\`.`
+};
+const ExpectedNotESMImage = {
+  name: "ExpectedNotESMImage",
+  title: "Expected image options, not an ESM-imported image.",
+  message: "An ESM-imported image cannot be passed directly to `getImage()`. Instead, pass an object with the image in the `src` property.",
+  hint: "Try changing `getImage(myImage)` to `getImage({ src: myImage })`"
+};
+const IncompatibleDescriptorOptions = {
+  name: "IncompatibleDescriptorOptions",
+  title: "Cannot set both `densities` and `widths`",
+  message: "Only one of `densities` or `widths` can be specified. In most cases, you'll probably want to use only `widths` if you require specific widths.",
+  hint: "Those attributes are used to construct a `srcset` attribute, which cannot have both `x` and `w` descriptors."
+};
+const NoImageMetadata = {
+  name: "NoImageMetadata",
+  title: "Could not process image metadata.",
+  message: (imagePath) => `Could not process image metadata${imagePath ? ` for \`${imagePath}\`` : ""}.`,
+  hint: "This is often caused by a corrupted or malformed image. Re-exporting the image from your image editor may fix this issue."
 };
 const ResponseSentError = {
   name: "ResponseSentError",
@@ -161,6 +228,12 @@ const AstroResponseHeadersReassigned = {
   title: "`Astro.response.headers` must not be reassigned.",
   message: "Individual headers can be added to and removed from `Astro.response.headers`, but it must not be replaced with another instance of `Headers` altogether.",
   hint: "Consider using `Astro.response.headers.add()`, and `Astro.response.headers.delete()`."
+};
+const LocalImageUsedWrongly = {
+  name: "LocalImageUsedWrongly",
+  title: "Local images must be imported.",
+  message: (imageFilePath) => `\`Image\`'s and \`getImage\`'s \`src\` parameter must be an imported image or an URL, it cannot be a string filepath. Received \`${imageFilePath}\`.`,
+  hint: "If you want to use an image from your `src` folder, you need to either import it or if the image is coming from a content collection, use the [image() schema helper](https://docs.astro.build/en/guides/images/#images-in-content-collections). See https://docs.astro.build/en/guides/images/#src-required for more information on the `src` property."
 };
 const AstroGlobUsedOutside = {
   name: "AstroGlobUsedOutside",
@@ -2594,4 +2667,4 @@ function spreadAttributes(values = {}, _name, { class: scopedClassName } = {}) {
   return markHTMLString(output);
 }
 
-export { createSlotValueFromString as $, AstroError as A, isRenderInstruction as B, originPathnameSymbol as C, DEFAULT_404_COMPONENT as D, RewriteWithBodyUsed as E, ROUTE_TYPE_HEADER as F, GetStaticPathsRequired as G, ASTRO_VERSION as H, InvalidGetStaticPathsReturn as I, clientLocalsSymbol as J, clientAddressSymbol as K, LocalsNotAnObject as L, MiddlewareNoDataOrNextCalled as M, NOOP_MIDDLEWARE_HEADER as N, PrerenderClientAddressNotAvailable as O, PageNumberParamNotFound as P, ClientAddressNotAvailable as Q, REROUTE_DIRECTIVE_HEADER as R, StaticClientAddressNotAvailable as S, AstroResponseHeadersReassigned as T, UnknownContentCollectionError as U, responseSentSymbol as V, renderPage as W, REWRITE_DIRECTIVE_HEADER_KEY as X, REWRITE_DIRECTIVE_HEADER_VALUE as Y, renderEndpoint as Z, decryptString as _, addAttribute as a, bold as a0, red as a1, yellow as a2, dim as a3, blue as a4, REROUTABLE_STATUS_CODES as a5, createAstro as b, createComponent as c, renderComponent as d, renderHead as e, renderSlot as f, decodeKey as g, escape as h, renderUniqueStylesheet as i, renderScriptElement as j, createHeadAndContent as k, i18nNoLocaleFoundInPath as l, maybeRenderHead as m, ResponseSentError as n, MiddlewareNotAResponse as o, InvalidGetStaticPathsEntry as p, GetStaticPathsExpectedParams as q, renderTemplate as r, GetStaticPathsInvalidRouteParam as s, NoMatchingStaticPathFound as t, unescapeHTML as u, PrerenderDynamicEndpointPathCollide as v, ReservedSlotName as w, renderSlotToString as x, renderJSX as y, chunkToString as z };
+export { ReservedSlotName as $, AstroError as A, bold as B, red as C, DEFAULT_404_COMPONENT as D, ExpectedImage as E, Fragment as F, yellow as G, dim as H, IncompatibleDescriptorOptions as I, blue as J, MiddlewareNoDataOrNextCalled as K, LocalImageUsedWrongly as L, MissingImageDimension as M, NOOP_MIDDLEWARE_HEADER as N, MiddlewareNotAResponse as O, GetStaticPathsRequired as P, InvalidGetStaticPathsReturn as Q, ROUTE_TYPE_HEADER as R, InvalidGetStaticPathsEntry as S, GetStaticPathsExpectedParams as T, UnsupportedImageFormat as U, GetStaticPathsInvalidRouteParam as V, PageNumberParamNotFound as W, decryptString as X, createSlotValueFromString as Y, NoMatchingStaticPathFound as Z, PrerenderDynamicEndpointPathCollide as _, UnsupportedImageConversion as a, renderSlotToString as a0, renderJSX as a1, chunkToString as a2, isRenderInstruction as a3, originPathnameSymbol as a4, RewriteWithBodyUsed as a5, ASTRO_VERSION as a6, LocalsNotAnObject as a7, clientLocalsSymbol as a8, clientAddressSymbol as a9, PrerenderClientAddressNotAvailable as aa, ClientAddressNotAvailable as ab, StaticClientAddressNotAvailable as ac, AstroResponseHeadersReassigned as ad, responseSentSymbol as ae, renderPage as af, REWRITE_DIRECTIVE_HEADER_KEY as ag, REWRITE_DIRECTIVE_HEADER_VALUE as ah, renderEndpoint as ai, REROUTABLE_STATUS_CODES as aj, addAttribute as b, createComponent as c, createAstro as d, renderComponent as e, renderHead as f, renderSlot as g, decodeKey as h, escape as i, UnknownContentCollectionError as j, renderUniqueStylesheet as k, renderScriptElement as l, maybeRenderHead as m, createHeadAndContent as n, NoImageMetadata as o, FailedToFetchRemoteImageDimensions as p, ExpectedImageOptions as q, renderTemplate as r, ExpectedNotESMImage as s, InvalidImageService as t, unescapeHTML as u, ImageMissingAlt as v, spreadAttributes as w, REROUTE_DIRECTIVE_HEADER as x, i18nNoLocaleFoundInPath as y, ResponseSentError as z };

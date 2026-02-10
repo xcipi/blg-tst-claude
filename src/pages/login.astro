@@ -3,19 +3,32 @@ import Layout from '../layouts/Layout.astro';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
 
-const error = Astro.url.searchParams.get('error');
+export const prerender = false;
 
-const errorMessages: Record<string, string> = {
-  missing: 'Vyplň username a heslo',
-  invalid: 'Nesprávne prihlasovacie údaje',
-  server: 'Serverová chyba, skús to znova'
-};
+// Check if user is already authenticated via CF Access SSO
+const isAuthenticated = Astro.locals.isAuthenticated || false;
 
-const errorMessage = error ? errorMessages[error] : null;
+// If already authenticated, redirect to admin
+if (isAuthenticated) {
+  return Astro.redirect('/admin');
+}
+
+// Get error from query params
+const url = new URL(Astro.request.url);
+const error = url.searchParams.get('error');
+
+let errorMessage = '';
+if (error === 'missing') {
+  errorMessage = 'Prosím vyplň všetky polia';
+} else if (error === 'invalid') {
+  errorMessage = 'Nesprávne prihlasovacie údaje';
+} else if (error === 'server') {
+  errorMessage = 'Chyba servera, skús to znova';
+}
 ---
 
-<Layout title="Admin Login - sec.blog">
-  <NavBar currentPath={Astro.url.pathname} />
+<Layout title="Login - Admin Dashboard">
+  <NavBar currentPath="/login" />
   
   <main class="min-h-screen pt-24 pb-16 px-4 flex items-center justify-center">
     <div class="max-w-md w-full">
@@ -26,22 +39,21 @@ const errorMessage = error ? errorMessages[error] : null;
       </div>
 
       {errorMessage && (
-        <div class="mb-6 bg-red-900/20 border border-red-500 rounded-lg p-4 text-center">
-          <p class="text-red-400 font-mono text-sm">{errorMessage}</p>
+        <div class="bg-red-900/20 border border-red-500 text-red-400 px-4 py-3 rounded mb-6 font-mono text-sm">
+          {errorMessage}
         </div>
       )}
 
-      <div class="bg-terminal-card border border-gray-800 rounded-lg p-8">
-        <form method="POST" action="/api/auth/login" class="space-y-4">
+      <div class="bg-[#111111] border border-gray-800 rounded-lg p-8">
+        <form action="/api/auth/login" method="POST" class="space-y-4">
           <div>
             <label class="block text-gray-400 font-mono text-sm mb-2">Username</label>
             <input
               type="text"
               name="username"
-              required
-              autocomplete="username"
               class="w-full bg-gray-900 border border-gray-800 rounded px-4 py-2 text-white font-mono focus:border-emerald-500 focus:outline-none"
               placeholder="admin"
+              required
             />
           </div>
           <div>
@@ -49,10 +61,9 @@ const errorMessage = error ? errorMessages[error] : null;
             <input
               type="password"
               name="password"
-              required
-              autocomplete="current-password"
               class="w-full bg-gray-900 border border-gray-800 rounded px-4 py-2 text-white font-mono focus:border-emerald-500 focus:outline-none"
               placeholder="••••••••"
+              required
             />
           </div>
           <button 
@@ -65,7 +76,7 @@ const errorMessage = error ? errorMessages[error] : null;
 
         <div class="mt-6 pt-6 border-t border-gray-800">
           <p class="text-gray-500 text-xs font-mono text-center">
-            Default credentials: admin / admin123
+            💡 Tip: Cloudflare Access chráni tento endpoint
           </p>
         </div>
       </div>

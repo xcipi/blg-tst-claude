@@ -1,0 +1,33 @@
+import { defineMiddleware } from 'astro:middleware';
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const runtime = context.locals.runtime as any;
+  
+  // Check session
+  const cookie = context.request.headers.get('Cookie');
+  const sessionId = cookie?.match(/session=([^;]+)/)?.[1];
+  
+  let isAuthenticated = false;
+  let username = '';
+
+  if (sessionId && runtime?.env?.DB) {
+    try {
+      const session = await runtime.env.DB.prepare(
+        'SELECT * FROM sessions WHERE id = ? AND expires_at > datetime("now")'
+      ).bind(sessionId).first();
+
+      if (session) {
+        isAuthenticated = true;
+        username = session.user_id as string;
+      }
+    } catch (e) {
+      console.error('Session check error:', e);
+    }
+  }
+
+  // Add to locals for pages to use
+  context.locals.isAuthenticated = isAuthenticated;
+  context.locals.username = username;
+
+  return next();
+});

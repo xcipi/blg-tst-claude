@@ -1,7 +1,7 @@
 globalThis.process ??= {}; globalThis.process.env ??= {};
 /* empty css                                 */
-import { c as createComponent, m as maybeRenderHead, r as renderTemplate, b as addAttribute, d as createAstro, e as renderComponent, F as Fragment } from '../chunks/astro/server_DwOUwrH7.mjs';
-import { b as $$Layout, $ as $$NavBar, a as $$Footer } from '../chunks/Footer_CKOy8880.mjs';
+import { c as createComponent, m as maybeRenderHead, r as renderTemplate, e as addAttribute, d as createAstro, b as renderComponent, F as Fragment } from '../chunks/astro/server_DjvQ9r3T.mjs';
+import { $ as $$Layout, a as $$NavBar, b as $$Footer } from '../chunks/Footer_ZFd_tFYe.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Astro$1 = createAstro();
@@ -20,13 +20,13 @@ const $$Bookmarks = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Bookmarks;
   const runtime = Astro2.locals.runtime;
+  const isAuthenticated = Astro2.locals.isAuthenticated || false;
   let bookmarks = [];
   let error = null;
   try {
     if (runtime?.env?.DB) {
-      const result = await runtime.env.DB.prepare(
-        "SELECT * FROM bookmarks WHERE is_private = 0 ORDER BY created_at DESC"
-      ).all();
+      const query = isAuthenticated ? "SELECT * FROM bookmarks ORDER BY created_at DESC" : "SELECT * FROM bookmarks WHERE is_private = 0 ORDER BY created_at DESC";
+      const result = await runtime.env.DB.prepare(query).all();
       bookmarks = result.results.map((row) => ({
         id: row.id,
         title: row.title,

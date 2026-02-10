@@ -4,9 +4,13 @@
     "/*"
   ],
   "exclude": [
-    "/blog/kubernetes-production-checklist",
-    "/blog/neovim-setup",
-    "/blog/typescript-patterns-2026",
+    "/blog/blog-free-security-tools",
+    "/blog/blog-nsx-getting-started",
+    "/blog/blog-powershell-powercli-linux",
+    "/blog/blog-sigred-cve",
+    "/blog/blog-ubuntu-eol-upgrade",
+    "/blog/blog-vmware-security-hardening",
+    "/blog/blog-yubikey-howtos",
     "/favicon.svg",
     "/_astro/*"
   ]

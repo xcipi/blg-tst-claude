@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="sk"> <head><meta charset="UTF-8"><meta name="description" content="CVE-2020-1350 je wormable kritická zraniteľnosť s CVSS 10.0 vo Windows DNS serveri. Postihuje Windows Server 2003-2019 a umožňuje získať Domain Admin práva."><meta name="viewport" content="width=device-width"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><meta name="generator" content="Astro v4.16.19"><title>SIGRed: Kritická Zraniteľnosť v Windows DNS - sec.blog</title><link rel="stylesheet" href="/_astro/index.PLCselAe.css">
+<style>.markdown-content{--tw-text-opacity: 1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.markdown-content h2{margin-top:2rem;margin-bottom:1rem;font-size:1.5rem;line-height:2rem;font-weight:700;--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.markdown-content h3{margin-top:1.5rem;margin-bottom:.75rem;font-size:1.25rem;line-height:1.75rem;font-weight:700;--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.markdown-content p{margin-bottom:1rem;line-height:1.625}.markdown-content ul,.markdown-content ol{margin-bottom:1.5rem}.markdown-content ul>:not([hidden])~:not([hidden]),.markdown-content ol>:not([hidden])~:not([hidden]){--tw-space-y-reverse: 0;margin-top:calc(.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem * var(--tw-space-y-reverse))}.markdown-content li{margin-left:1rem}.markdown-content ul li{list-style-type:disc}.markdown-content code{border-radius:.25rem;--tw-bg-opacity: 1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1));padding:.25rem .5rem;font-family:JetBrains Mono,monospace;font-size:.875rem;line-height:1.25rem;--tw-text-opacity: 1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.markdown-content pre{margin-top:1.5rem;margin-bottom:1.5rem;overflow-x:auto;border-radius:.5rem;border-width:1px;--tw-border-opacity: 1;border-color:rgb(31 41 55 / var(--tw-border-opacity, 1));--tw-bg-opacity: 1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1));padding:1rem}.markdown-content pre code{background-color:transparent;padding:0;--tw-text-opacity: 1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.markdown-content strong{font-weight:700;--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.markdown-content a{--tw-text-opacity: 1;color:rgb(16 185 129 / var(--tw-text-opacity, 1))}.markdown-content a:hover{text-decoration-line:underline}.markdown-content blockquote{margin-top:1.5rem;margin-bottom:1.5rem;border-left-width:4px;--tw-border-opacity: 1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1));padding-left:1rem;font-style:italic}
+</style></head> <body>  <nav class="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0a] border-b border-gray-800"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> <div class="flex items-center justify-between h-16"> <div class="flex items-center gap-2"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-500"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="/" class="text-emerald-500 font-mono text-lg
+        font-bold">[skipi].sec.blog</a> </div> <div class="flex items-center gap-2"> <a href="/" class="px-4 py-2 rounded font-mono text-sm transition-all text-gray-400 hover:text-emerald-500 hover:bg-gray-900">
+~/home
+</a> <a href="/blog" class="px-4 py-2 rounded font-mono text-sm transition-all bg-emerald-500 text-black font-bold">
+~/blog
+</a> <a href="/bookmarks" class="px-4 py-2 rounded font-mono text-sm transition-all text-gray-400 hover:text-emerald-500 hover:bg-gray-900">
+~/bookmarks
+</a> <a href="/login" class="px-4 py-2 rounded font-mono text-sm transition-all text-gray-400 hover:text-emerald-500 hover:bg-gray-900">
+login
+</a> </div> </div> </div> </nav> <main class="min-h-screen pt-24 pb-16 px-4"> <div class="max-w-4xl mx-auto"> <div class="mb-8"> <div class="text-emerald-500 font-mono text-sm mb-4">
+$ cat ~/blog/blog-sigred-cve.md
+</div> <div class="flex flex-wrap gap-2 mb-4"> <span class="px-3 py-1 rounded-full text-xs font-mono border bg-gray-900 text-emerald-500 border-gray-800"> cybersecurity </span><span class="px-3 py-1 rounded-full text-xs font-mono border bg-gray-900 text-emerald-500 border-gray-800"> vulnerability </span><span class="px-3 py-1 rounded-full text-xs font-mono border bg-gray-900 text-emerald-500 border-gray-800"> windows </span><span class="px-3 py-1 rounded-full text-xs font-mono border bg-gray-900 text-emerald-500 border-gray-800"> dns </span><span class="px-3 py-1 rounded-full text-xs font-mono border bg-gray-900 text-emerald-500 border-gray-800"> cve </span> </div> <h1 class="text-4xl md:text-5xl font-bold text-white mb-4"> SIGRed: Kritická Zraniteľnosť v Windows DNS </h1> <div class="flex items-center gap-4 text-sm text-gray-500 font-mono mb-8"> <span class="flex items-center gap-1"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect> <line x1="16" x2="16" y1="2" y2="6"></line> <line x1="8" x2="8" y1="2" y2="6"></line> <line x1="3" x2="21" y1="10" y2="10"></line> </svg> 2020-07-14 </span> <span class="flex items-center gap-1"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <circle cx="12" cy="12" r="10"></circle> <polyline points="12 6 12 12 16 14"></polyline> </svg> 4 min </span> </div> </div> <!-- Article Content --> <article class="prose prose-invert prose-emerald max-w-none markdown-content"> <p>SIGRed (CVE-2020-1350) je jedna z najkritickejších zraniteľností v histórii Windows serverov.</p>
+<h2 id="základné-informácie">Základné Informácie</h2>
+<p><strong>CVE-2020-1350</strong> je wormable, kritická zraniteľnosť s <strong>CVSS base score 10.0</strong> (maximálne kritická) vo Windows DNS serveri.</p>
+<h3 id="postihnuté-verzie">Postihnuté Verzie</h3>
+<p>Zraniteľnosť postihuje všetky Windows Server verzie:</p>
+<ul>
+<li>Windows Server 2003</li>
+<li>Windows Server 2008</li>
+<li>Windows Server 2012</li>
+<li>Windows Server 2016</li>
+<li>Windows Server 2019</li>
+</ul>
+<h2 id="dopad-zraniteľnosti">Dopad Zraniteľnosti</h2>
+<h3 id="mechanizmus-útoku">Mechanizmus Útoku</h3>
+<p>Zraniteľnosť môže byť spustená <strong>malicious DNS response</strong> (odpoveďou). Útočník nemusí mať priamy prístup k serveru.</p>
+<h3 id="privileges">Privileges</h3>
+<p>Keďže DNS služba beží s <strong>SYSTEM privilégiami</strong>, úspešný exploit poskytuje útočníkovi:</p>
+<p>✅ <strong>Domain Administrator práva</strong><br>
+✅ <strong>Kompletný control nad doménou</strong><br>
+✅ <strong>Kompromitácia celej corporate infraštruktúry</strong></p>
+<h3 id="wormable">Wormable</h3>
+<p>Zraniteľnosť je <strong>wormable</strong>, čo znamená že sa môže šíriť automaticky medzi servermi bez ľudskej interakcie - podobne ako WannaCry alebo NotPetya.</p>
+<h2 id="technické-detaily">Technické Detaily</h2>
+<p>Detailný technický rozbor od Check Point Research:</p>
+<p><a href="https://research.checkpoint.com/2020/resolving-your-way-into-domain-admin:-exploiting-a-17-year-old-bug-in-windows-dns-servers/">Resolving Your Way Into Domain Admin: Exploiting a 17-Year-Old Bug in Windows DNS Servers</a></p>
+<p>Check Point výskumníci objavili 17-ročný bug v spracovaní DNS SIG resource records.</p>
+<h2 id="ochrana-a-mitigation">Ochrana a Mitigation</h2>
+<h3 id="okamžité-kroky">Okamžité Kroky</h3>
+<ol>
+<li><strong>Patch immediately:</strong> Inštaluj Microsoft security update</li>
+<li><strong>Registry workaround:</strong> Ak nemôžeš patchovať, použi registry fix</li>
+<li><strong>Monitor DNS traffic:</strong> Sleduj nezvyčajnú DNS aktivitu</li>
+<li><strong>Segment network:</strong> Izoluj kritické DNS servery</li>
+</ol>
+<h3 id="microsoft-patch">Microsoft Patch</h3>
+<p>Microsoft vydal patch v July 2020 Patch Tuesday. <strong>Okamžitá inštalácia je kritická.</strong></p>
+<h3 id="registry-workaround">Registry Workaround</h3>
+<p>Ak nemôžeš okamžite patchovať, nastav:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DNS\Parameters</span></span>
+<span class="line"><span>TcpReceivePacketSize = 0xFF00 (DWORD)</span></span>
+<span class="line"><span></span></span></code></pre>
+<h2 id="dôležité-poznámky">Dôležité Poznámky</h2>
+<p>⚠️ <strong>Critical Priority:</strong> CVSS 10.0 znamená maximálnu prioritu<br>
+⚠️ <strong>No User Interaction:</strong> Exploit nevyžaduje user akciu<br>
+⚠️ <strong>Remote Exploitation:</strong> Útok možný cez sieť<br>
+⚠️ <strong>Wormable:</strong> Možnosť automatického šírenia</p>
+<h2 id="zdroje">Zdroje</h2>
+<ul>
+<li><a href="https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-1350">Microsoft Security Advisory</a></li>
+<li><a href="https://research.checkpoint.com/2020/resolving-your-way-into-domain-admin:-exploiting-a-17-year-old-bug-in-windows-dns-servers/">Check Point Research</a></li>
+<li><a href="https://nvd.nist.gov/vuln/detail/CVE-2020-1350">NIST CVE Database</a></li>
+</ul> </article> <!-- Back button --> <a href="/blog" class="mt-12 text-emerald-500 font-mono hover:underline flex items-center gap-2 inline-flex"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rotate-180"> <polyline points="9 18 15 12 9 6"></polyline> </svg>
+späť na články
+</a> </div> </main> <footer class="border-t border-gray-800 bg-[#0a0a0a] py-8"> <div class="max-w-7xl mx-auto px-4"> <!-- Certification Badges --> <div class="flex flex-wrap gap-2 mb-6 opacity-60 hover:opacity-100 transition-opacity"> <a href="https://www.credly.com/earner/earned/badge/3457cc79-0116-4dfa-9f55-4d911c3531a4" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-2 py-2 bg-gray-900 border border-gray-800 rounded hover:border-emerald-500 transition-all" title=""> <div class="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white"> <img src="https://images.credly.com/size/340x340/images/e1db35be-2f90-4435-bf0f-ac69f3ffbdfc/blob" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform"> </div> <span class="text-xs text-gray-500 font-mono group-hover:text-emerald-500 transition-colors">  </span> </a><a href="https://www.credly.com/earner/earned/badge/71cfdc40-c5bd-4d02-8e80-3151f275d26b" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-2 py-2 bg-gray-900 border border-gray-800 rounded hover:border-emerald-500 transition-all" title=""> <div class="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white"> <img src="https://images.credly.com/size/340x340/images/cd769843-4907-4d1a-9702-0512eb87ae6e/cisco_ccnp_security.png" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform"> </div> <span class="text-xs text-gray-500 font-mono group-hover:text-emerald-500 transition-colors">  </span> </a><a href="https://www.credly.com/earner/earned/badge/95a75c3b-9e01-40ea-9f68-e30c391ac943" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-2 py-2 bg-gray-900 border border-gray-800 rounded hover:border-emerald-500 transition-all" title=""> <div class="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white"> <img src="https://images.credly.com/size/340x340/images/54493e06-3286-4dfc-b0fc-80f3846db491/blob" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform"> </div> <span class="text-xs text-gray-500 font-mono group-hover:text-emerald-500 transition-colors">  </span> </a><a href="https://www.credly.com/earner/earned/badge/bb642c39-3f1b-4d98-9c02-e28ec4542c0b" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 px-2 py-2 bg-gray-900 border border-gray-800 rounded hover:border-emerald-500 transition-all" title=""> <div class="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white"> <img src="https://images.credly.com/size/340x340/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform"> </div> <span class="text-xs text-gray-500 font-mono group-hover:text-emerald-500 transition-colors">  </span> </a> </div> <!-- Copyright --> <div class="text-center"> <p class="text-emerald-500 font-mono text-sm">
+$ echo "© 2026 – built with passion"
+</p> </div> </div> </footer>  </body></html> 

@@ -16,15 +16,20 @@ interface Bookmark {
 }
 
 const runtime = Astro.locals.runtime;
+const isAuthenticated = Astro.locals.isAuthenticated || false;
+
 let bookmarks: Bookmark[] = [];
 let error: string | null = null;
 
 // Fetch bookmarks from D1
 try {
   if (runtime?.env?.DB) {
-    const result = await runtime.env.DB.prepare(
-      'SELECT * FROM bookmarks WHERE is_private = 0 ORDER BY created_at DESC'
-    ).all();
+    // Ak je user prihlásený, zobraz všetky. Inak len public.
+    const query = isAuthenticated
+      ? 'SELECT * FROM bookmarks ORDER BY created_at DESC'
+      : 'SELECT * FROM bookmarks WHERE is_private = 0 ORDER BY created_at DESC';
+    
+    const result = await runtime.env.DB.prepare(query).all();
     
     bookmarks = result.results.map((row: any) => ({
       id: row.id,
@@ -39,6 +44,7 @@ try {
   error = 'Chyba pri načítaní bookmarkov';
   console.error(e);
 }
+
 
 // Get all unique tags
 const allTags = bookmarks.length > 0 

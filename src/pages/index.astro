@@ -1,41 +1,55 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import NavBar from '../components/NavBar.astro';
+import CertificationsShowcase from '../components/CertificationsShowcase.astro';
 import Footer from '../components/Footer.astro';
-import BlogCard from '../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
 
-const allPosts = await getCollection('blog');
-const sortedPosts = allPosts.sort((a, b) => 
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-).slice(0, 3);
+export const prerender = false;
+
+// Fetch latest 3 blog posts from content collection
+const allBlogPosts = await getCollection('blog');
+
+// Sort by date (newest first) and take top 3
+const blogPosts = allBlogPosts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 3)
+  .map(post => ({
+    title: post.data.title,
+    excerpt: post.data.excerpt,
+    slug: post.slug,
+    date: post.data.date,
+    readTime: post.data.readTime,
+    tags: post.data.tags
+  }));
 ---
 
-<Layout title="sec.blog - IT profesionál">
-  <NavBar currentPath={Astro.url.pathname} />
+<Layout title="sec.blog - IT profesionál píšem o veciach, ktoré ma bavia">
+  <NavBar currentPath="/" />
   
   <main class="min-h-screen pt-24 pb-16 px-4">
     <div class="max-w-7xl mx-auto">
-      <!-- Hero -->
+      
+      <!-- Hero Section -->
       <div class="mb-16">
         <div class="text-emerald-500 font-mono text-sm mb-8">$ whoami</div>
         <h1 class="text-5xl md:text-7xl font-bold mb-6">
-          <span class="text-emerald-500 font-mono">IT profesionál</span>
+          <span class="text-emerald-500 font-mono">cybersec nerd</span>
           <br />
           <span class="text-white">píšem o veciach,</span>
           <br />
           <span class="text-white">ktoré ma bavia</span>
         </h1>
         <p class="text-gray-400 text-lg mb-8 max-w-2xl">
-          Blog o IT, DevOps, programovaní a všetkom zaujímavom. Zbierka bookmarkov a myšlienok z digitálneho sveta.
+          Blog o IT, cybersec a všetkom zaujímavom. Zbierka bookmarkov a myšlienok z digitálneho sveta.
         </p>
         <div class="flex flex-wrap gap-4">
           <a
             href="/blog"
-            class="bg-emerald-500 text-black px-6 py-3 rounded font-mono font-bold hover:bg-emerald-400 transition-all flex items-center gap-2"
+            class="bg-emerald-500 text-black px-6 py-3 rounded font-mono font-bold hover:bg-emerald-400 transition-all inline-flex items-center gap-2"
           >
             Čítať blog
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </a>
@@ -48,40 +62,82 @@ const sortedPosts = allPosts.sort((a, b) =>
         </div>
       </div>
 
+      <!-- Certifications Showcase -->
+      <CertificationsShowcase />
+
       <!-- Latest Posts -->
       <div>
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-500">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
             Posledné články
           </h2>
           <a
             href="/blog"
-            class="text-emerald-500 font-mono text-sm hover:underline flex items-center gap-1"
+            class="text-emerald-500 font-mono text-sm hover:underline inline-flex items-center gap-1"
           >
             všetky
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </a>
         </div>
+        
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedPosts.map((post) => (
-            <BlogCard
-              title={post.data.title}
-              excerpt={post.data.excerpt}
-              tags={post.data.tags}
-              date={post.data.date}
-              readTime={post.data.readTime}
-              slug={post.slug}
-            />
+          {blogPosts.map(post => (
+            <a
+              href={`/blog/${post.slug}`}
+              class="bg-[#111111] border border-gray-800 rounded-lg p-6 hover:border-emerald-500 transition-all group"
+            >
+              <div class="flex flex-wrap gap-2 mb-4">
+                {post.tags.map(tag => (
+                  <span class="px-3 py-1 rounded-full text-xs font-mono bg-gray-900 text-emerald-500 border border-gray-800">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2 group-hover:text-emerald-500 transition-colors">
+                {post.title}
+              </h3>
+              <p class="text-gray-400 mb-4 line-clamp-2">
+                {post.excerpt}
+              </p>
+              <div class="flex items-center gap-4 text-sm text-gray-500 font-mono">
+                <span class="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  {new Date(post.date).toISOString().split('T')[0]}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {post.readTime}
+                </span>
+              </div>
+            </a>
           ))}
         </div>
       </div>
+
     </div>
   </main>
 
   <Footer />
 </Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

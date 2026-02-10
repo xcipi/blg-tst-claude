@@ -9,11 +9,13 @@ const POST = async ({ request, locals, cookies }) => {
       const runtime = locals.runtime;
       await runtime.env.DB.prepare("DELETE FROM sessions WHERE id = ?").bind(sessionId).run();
     }
+    cookies.delete("session", { path: "/" });
+    const cfAccessLogoutUrl = "https://skipi.cloudflareaccess.com/cdn-cgi/access/logout";
+    const returnUrl = new URL(request.url).origin;
     return new Response(null, {
       status: 302,
       headers: {
-        "Location": "/",
-        "Set-Cookie": "session=; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Path=/"
+        "Location": `${cfAccessLogoutUrl}?returnTo=${encodeURIComponent(returnUrl)}`
       }
     });
   } catch (error) {

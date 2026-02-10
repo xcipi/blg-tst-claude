@@ -141,23 +141,51 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
-"kubernetes-production-checklist.md": {
-	id: "kubernetes-production-checklist.md";
-  slug: "kubernetes-production-checklist";
+"blog-free-security-tools.md": {
+	id: "blog-free-security-tools.md";
+  slug: "blog-free-security-tools";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"neovim-setup.md": {
-	id: "neovim-setup.md";
-  slug: "neovim-setup";
+"blog-nsx-getting-started.md": {
+	id: "blog-nsx-getting-started.md";
+  slug: "blog-nsx-getting-started";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"typescript-patterns-2026.md": {
-	id: "typescript-patterns-2026.md";
-  slug: "typescript-patterns-2026";
+"blog-powershell-powercli-linux.md": {
+	id: "blog-powershell-powercli-linux.md";
+  slug: "blog-powershell-powercli-linux";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"blog-sigred-cve.md": {
+	id: "blog-sigred-cve.md";
+  slug: "blog-sigred-cve";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"blog-ubuntu-eol-upgrade.md": {
+	id: "blog-ubuntu-eol-upgrade.md";
+  slug: "blog-ubuntu-eol-upgrade";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"blog-vmware-security-hardening.md": {
+	id: "blog-vmware-security-hardening.md";
+  slug: "blog-vmware-security-hardening";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"blog-yubikey-howtos.md": {
+	id: "blog-yubikey-howtos.md";
+  slug: "blog-yubikey-howtos";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

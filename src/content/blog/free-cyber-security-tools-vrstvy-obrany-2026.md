@@ -13,11 +13,11 @@ slug: "free-cyber-security-tools-vrstvy-obrany"
 
 Rok 2026 prináša bezprecedentnú vlnu sofistikovaných kybernetických hrozieb. Útočníci už nie sú len hackeri s klávesnicou - [dnes používajú umelú inteligenciu na napodobňovanie správania používateľov](https://medium.com/infosecmatrix/cybersecurity-layers-explained-defense-in-depth-done-right-97bccd0d92ec) a obchádzanie základnej detekcie. Stretávame sa s:
 
-- **AI-powered útoky** - automatizované škálovateľné kampane
-- **Deepfake social engineering** - falošné video hovory s CEO
-- **Ransomware-as-a-Service** - kyberzločin ako biznis model
-- **Supply chain attacks** - kompromitácia cez dodávateľov
-- **Fileless malware** - bezstopové útoky priamo v pamäti
+- **Útoky poháňané AI** - automatizované škálovateľné kampane
+- **Deepfake sociálne inžinierstvo** - falošné video hovory s vedením firmy
+- **Ransomware ako služba** - kyberzločin ako biznis model
+- **Útoky na dodávateľský reťazec** - kompromitácia cez dodávateľov
+- **Bezstopový malware** - útoky priamo v pamäti bez súborov
 - **Zero-day exploity** - zneužívanie neznámych zraniteľností
 
 Odpoveďou nie je jeden "super nástroj", ale **Defense in Depth** - viacvrstvová obrana, kde každá vrstva kompenzuje slabiny tej predchádzajúcej.
@@ -30,13 +30,13 @@ Odpoveďou nie je jeden "super nástroj", ale **Defense in Depth** - viacvrstvov
 
 Kvalitná kybernetická bezpečnosť nemusí stáť tisíce eur. Open-source komunita vytvorila nástroje, ktoré konkurujú enterprise riešeniam.
 
-### Network Security & Monitoring
+### Sieťová bezpečnosť a monitorovanie
 
-#### 1. **Wireshark** - Deep Packet Inspection
+#### 1. **Wireshark** - Detailná analýza paketov
 - **Čo robí:** Zachytáva a analyzuje sieťovú komunikáciu v reálnom čase
 - **Prečo je top:** Vidiš každý byte prechádzajúci sieťou
-- **Use case:** Troubleshooting, detekcia malicious traffic, forenzná analýza
-- **Link:** [wireshark.org](https://www.wireshark.org)
+- **Použitie:** Riešenie problémov, detekcia škodlivej prevádzky, forenzná analýza
+- **Odkaz:** [wireshark.org](https://www.wireshark.org)
 
 ```bash
 # Príklad: Zachyť HTTP traffic na porte 80
@@ -44,41 +44,41 @@ sudo wireshark -i eth0 -f "port 80"
 ```
 
 #### 2. **Snort / Suricata** - IDS/IPS Systémy
-- **Čo robí:** Real-time traffic analysis a packet logging
-- **Prečo je top:** Signature-based detekcia + anomaly detection
-- **Use case:** Detekcia network attacks, suspicious activities
-- **Link:** [snort.org](https://www.snort.org) | [suricata.io](https://suricata.io)
+- **Čo robí:** Analýza prevádzky v reálnom čase a logovanie paketov
+- **Prečo je top:** Detekcia založená na signaturách + detekcia anomálií
+- **Použitie:** Detekcia sieťových útokov, podozrivých aktivít
+- **Odkaz:** [snort.org](https://www.snort.org) | [suricata.io](https://suricata.io)
 
-#### 3. **Zeek (Bro)** - Network Security Monitor
-- **Čo robí:** Pasívne monitoruje network pre bezpečnostné incidenty
+#### 3. **Zeek (Bro)** - Monitor sieťovej bezpečnosti
+- **Čo robí:** Pasívne monitoruje sieť pre bezpečnostné incidenty
 - **Prečo je top:** Vytvára high-level security insights z network traffic
-- **Link:** [zeek.org](https://zeek.org)
+- **Odkaz:** [zeek.org](https://zeek.org)
 
 ---
 
-### Vulnerability Scanning & Penetration Testing
+### Skenovanie zraniteľností a penetračné testovanie
 
 #### 4. **Kali Linux 2026.1** - Kompletná Security Distribúcia
 - **Čo robí:** 300+ nástrojov pre pentesting a ethical hacking
 - **Prečo je top:** Všetko na jednom mieste - od recon až po exploitation
 - **Obsahuje:** Metasploit, Nmap, Hydra, Aircrack-ng, Burp Suite Community
-- **Link:** [kali.org](https://www.kali.org)
+- **Odkaz:** [kali.org](https://www.kali.org)
 
 ```bash
-# Quick network scan
+# Rýchly sieťový scan
 nmap -sV -sC -oA scan_results target.com
 ```
 
-#### 5. **OWASP ZAP** - Web Application Scanner
+#### 5. **OWASP ZAP** - Skener webových aplikácií
 - **Čo robí:** Automatizované testovanie webových aplikácií
 - **Prečo je top:** Odhaľuje OWASP Top 10 zraniteľnosti
-- **Use case:** Spidering, fuzzing, active/passive scanning
-- **Link:** [zaproxy.org](https://www.zaproxy.org)
+- **Použitie:** Prehľadávanie, fuzzing, aktívne/pasívne skenovanie
+- **Odkaz:** [zaproxy.org](https://www.zaproxy.org)
 
-#### 6. **Metasploit Framework** - Exploitation Platform
-- **Čo robí:** Penetration testing a vulnerability validation
+#### 6. **Metasploit Framework** - Platforma pre exploitáciu
+- **Čo robí:** Penetračné testovanie a validácia zraniteľností
 - **Prečo je top:** Obrovská databáza exploitov a payloadov
-- **Link:** [metasploit.com](https://www.metasploit.com)
+- **Odkaz:** [metasploit.com](https://www.metasploit.com)
 
 ```bash
 # Spustenie Metasploit konzoly
@@ -89,28 +89,28 @@ search type:exploit platform:windows smb
 
 ---
 
-### SIEM & Threat Detection
+### SIEM a detekcia hrozieb
 
-#### 7. **Wazuh** - Open Source XDR Platform
-- **Čo robí:** Komplexné threat detection, monitoring a response
-- **Prečo je top:** SIEM + EDR + vulnerability detection v jednom
-- **Features:** Log analysis, file integrity monitoring, incident response
-- **Link:** [wazuh.com](https://wazuh.com)
+#### 7. **Wazuh** - Open Source XDR Platforma
+- **Čo robí:** Komplexná detekcia hrozieb, monitorovanie a reakcia
+- **Prečo je top:** SIEM + EDR + detekcia zraniteľností v jednom
+- **Funkcie:** Analýza logov, monitorovanie integrity súborov, reakcia na incidenty
+- **Odkaz:** [wazuh.com](https://wazuh.com)
 
-#### 8. **Splunk Free** - Log Management (limit 500MB/deň)
-- **Čo robí:** Real-time data analysis a vizualizácia
-- **Prečo je top:** Powerful search a alerting capabilities
-- **Link:** [splunk.com](https://www.splunk.com/en_us/download/splunk-enterprise.html)
+#### 8. **Splunk Free** - Správa logov (limit 500MB/deň)
+- **Čo robí:** Analýza dát v reálnom čase a vizualizácia
+- **Prečo je top:** Výkonné vyhľadávanie a alertovanie
+- **Odkaz:** [splunk.com](https://www.splunk.com/en_us/download/splunk-enterprise.html)
 
 ---
 
-### DevSecOps & Code Security
+### DevSecOps a bezpečnosť kódu
 
-#### 9. **Snyk** - Open Source Dependency Scanner
-- **Čo robí:** Skenuje open-source dependencies a container images
-- **Prečo je top:** Odhaľuje known vulnerabilities v third-party balíčkoch
+#### 9. **Snyk** - Skener open-source závislostí
+- **Čo robí:** Skenuje open-source závislosti a obrazy kontajnerov
+- **Prečo je top:** Odhaľuje známe zraniteľnosti v balíčkoch tretích strán
 - **Integrácie:** GitHub, GitLab, Docker, Kubernetes
-- **Link:** [snyk.io](https://snyk.io)
+- **Odkaz:** [snyk.io](https://snyk.io)
 
 ```bash
 # Test projektu na zraniteľnosti
@@ -119,50 +119,50 @@ snyk test
 snyk monitor
 ```
 
-#### 10. **Checkov** - Infrastructure as Code Security
-- **Čo robí:** Static code analysis pre IaC (Terraform, CloudFormation, Kubernetes)
-- **Prečo je top:** Odhalí misconfigurations pred deploymentom
-- **Link:** [checkov.io](https://www.checkov.io)
+#### 10. **Checkov** - Bezpečnosť Infrastructure as Code
+- **Čo robí:** Statická analýza kódu pre IaC (Terraform, CloudFormation, Kubernetes)
+- **Prečo je top:** Odhalí chybné konfigurácie pred nasadením
+- **Odkaz:** [checkov.io](https://www.checkov.io)
 
 ```bash
 # Scan Terraform súborov
 checkov -d /path/to/terraform
 ```
 
-#### 11. **DefectDojo** - Vulnerability Management
-- **Čo robí:** DevSecOps platform pre tracking a remediation
-- **Prečo je top:** Centralizuje výsledky z viacerých security tools
-- **Features:** Deduplication, reporting, remediation workflow
-- **Link:** [defectdojo.org](https://www.defectdojo.org)
+#### 11. **DefectDojo** - Správa zraniteľností
+- **Čo robí:** DevSecOps platforma pre sledovanie a nápravu
+- **Prečo je top:** Centralizuje výsledky z viacerých bezpečnostných nástrojov
+- **Funkcie:** Deduplikácia, reportovanie, workflow nápravy
+- **Odkaz:** [defectdojo.org](https://www.defectdojo.org)
 
 ---
 
-### Supply Chain Security
+### Bezpečnosť dodávateľského reťazca
 
-#### 12. **Heisenberg** - Software Supply Chain Health
-- **Čo robí:** Analyzuje dependencies pomocí SBOM (Software Bill of Materials)
-- **Prečo je top:** Identifikuje risky v supply chain pred incidentom
-- **Use case:** Package health scoring, risk detection
-- **Link:** [github.com/Checkmarx/heisenberg](https://github.com/Checkmarx/heisenberg)
+#### 12. **Heisenberg** - Zdravie softvérového dodávateľského reťazca
+- **Čo robí:** Analyzuje závislosti pomocou SBOM (Software Bill of Materials)
+- **Prečo je top:** Identifikuje riziká v dodávateľskom reťazci pred incidentom
+- **Použitie:** Hodnotenie zdravia balíčkov, detekcia rizík
+- **Odkaz:** [github.com/Checkmarx/heisenberg](https://github.com/Checkmarx/heisenberg)
 
-#### 13. **VulnRisk** - Context-Aware Vulnerability Assessment
+#### 13. **VulnRisk** - Kontextové hodnotenie zraniteľností
 - **Čo robí:** Hodnotenie zraniteľností nad rámec CVSS skóre
-- **Prečo je top:** Redukuje noise, zvýrazňuje čo naozaj záleží
-- **Link:** [github.com/cyal1/VulnRisk](https://github.com/cyal1/VulnRisk)
+- **Prečo je top:** Redukuje šum, zvýrazňuje čo naozaj záleží
+- **Odkaz:** [github.com/cyal1/VulnRisk](https://github.com/cyal1/VulnRisk)
 
 ---
 
-### Endpoint & Malware Protection
+### Ochrana koncových zariadení a antimalware
 
-#### 14. **ClamAV** - Open Source Antivirus
+#### 14. **ClamAV** - Open Source Antivírus
 - **Čo robí:** Detekcia malware, vírusov, trojanov
-- **Prečo je top:** Command-line friendly, integrovateľný do automation
-- **Link:** [clamav.net](https://www.clamav.net)
+- **Prečo je top:** Príkazový riadok, integrovateľný do automatizácie
+- **Odkaz:** [clamav.net](https://www.clamav.net)
 
 ```bash
 # Scan adresára
 clamscan -r /home/user/downloads
-# Update databázy
+# Aktualizácia databázy
 freshclam
 ```
 
@@ -217,11 +217,11 @@ Moderná kybernetická obrana nie je jednorazový firewall. Je to orchestrovaný
 **Kontroly:**
 - **Firewally** - kontrolujú prichádzajúcu/odchádzajúcu komunikáciu
 - **IDS/IPS** - Snort, Suricata pre detekciu a blokovanie útokov
-- **Network Segmentation** - VLAN, DMZ, micro-segmentation
+- **Segmentácia siete** - VLAN, DMZ, micro-segmentation
 - **VPN** - šifrované vzdialené pripojenia
-- **Network Monitoring** - Wireshark, Zeek pre traffic analysis
+- **Monitorovanie siete** - Wireshark, Zeek pre analýza sieťovej prevádzky
 
-**Best practices:**
+**Osvedčené postupy:**
 ```bash
 # Príklad: UFW firewall konfigurácia
 sudo ufw default deny incoming
@@ -232,22 +232,22 @@ sudo ufw enable
 ```
 
 **Nástroje:**
-- pfSense, OPNsense (firewall distribúcie)
+- pfSense, OPNsense (distribúcie firewallu)
 - Snort, Suricata (IDS/IPS)
-- Wireshark, tcpdump (packet analysis)
+- Wireshark, tcpdump (analýza paketov)
 
 ---
 
 ### Vrstva 3: Koncové zariadenia (Endpoint Layer)
 
-**Čo chráni:** Laptopy, desktopy, servery, mobile devices
+**Čo chráni:** Laptopy, desktopy, servery, mobilné zariadenia
 
 **Kontroly:**
-- **EDR (Endpoint Detection & Response)** - real-time monitoring
-- **Antimalware s AI detekciou** - behaviorálna analýza
-- **Host-based Firewall** - kontrola na úrovni zariadenia
-- **Device encryption** - full disk encryption (LUKS, BitLocker)
-- **Patch management** - pravidelné updates
+- **EDR (Endpoint Detekcia a reakcia)** - monitorovanie v reálnom čase
+- **Antimalware s AI detekciou** - analýza správania
+- **Firewall na úrovni zariadenia** - kontrola na úrovni zariadenia
+- **Šifrovanie zariadení** - úplné šifrovanie disku (LUKS, BitLocker)
+- **Správa aktualizácií** - pravidelné updates
 
 **Nástroje:**
 - Wazuh Agent (EDR capabilities)
@@ -265,14 +265,14 @@ sudo ufw enable
 
 **Kontroly:**
 - **WAF (Web Application Firewall)** - ochrana pred OWASP Top 10
-- **SAST** (Static Application Security Testing) - analýza source code
-- **DAST** (Dynamic Application Security Testing) - runtime testing
-- **API Security** - rate limiting, authentication, input validation
-- **Dependency scanning** - Snyk, OWASP Dependency-Check
+- **SAST** (Statické testovanie bezpečnosti aplikácií) - analýza zdrojového kódu
+- **DAST** (Dynamické testovanie bezpečnosti aplikácií) - testovanie počas behu
+- **API Security** - obmedzovanie rýchlosti, authentication, validácia vstupov
+- **Skenovanie závislostí** - Snyk, OWASP Dependency-Check
 
 **Nástroje:**
 - OWASP ZAP (web app scanner)
-- ModSecurity (open-source WAF)
+- ModSecurity (open-source WAF (Web Application Firewall))
 - SonarQube (SAST)
 - Snyk, Dependabot (dependency scanning)
 
@@ -327,8 +327,8 @@ restic -r /backup/repo check
 # Restore
 restic -r /backup/repo restore latest --target /restore/path
 ```
-- **Features:** Deduplikácia, šifrovanie, incremental backups
-- **Link:** [restic.net](https://restic.net)
+- **Funkcie:** Deduplikácia, šifrovanie, inkrementálne zálohy
+- **Odkaz:** [restic.net](https://restic.net)
 
 ##### **BorgBackup** - Deduplikujúce šifrované zálohy
 ```bash
@@ -344,24 +344,24 @@ borg list /path/to/repo
 # Restore
 borg extract /path/to/repo::archive-name
 ```
-- **Features:** Komprimácia, šifrovanie, deduplikácia na úrovni chunkov
-- **Link:** [borgbackup.org](https://www.borgbackup.org)
+- **Funkcie:** Komprimácia, šifrovanie, deduplikácia na úrovni chunkov
+- **Odkaz:** [borgbackup.org](https://www.borgbackup.org)
 
 ##### **Duplicati** - Cloud-ready s GUI
-- **Features:** Zálohy do cloud (AWS S3, Google Drive, OneDrive, Dropbox)
+- **Funkcie:** Zálohy do cloud (AWS S3, Google Drive, OneDrive, Dropbox)
 - **Šifrovanie:** AES-256 pred uploadom
 - **Scheduling:** Automatické inkrementálne zálohy
-- **Link:** [duplicati.com](https://www.duplicati.com)
+- **Odkaz:** [duplicati.com](https://www.duplicati.com)
 
 ##### **UrBackup** - Client/Server pre Enterprise
-- **Features:** Image backups celých systémov, file backups
-- **Use case:** Centralizované zálohovanie viacerých workstations
-- **Link:** [urbackup.org](https://www.urbackup.org)
+- **Funkcie:** Zálohovanie kompletných systémov, súborové zálohy
+- **Použitie:** Centralizované zálohovanie viacerých pracovných staníc
+- **Odkaz:** [urbackup.org](https://www.urbackup.org)
 
 ##### **Bacula** - Enterprise-grade Backup System
-- **Features:** Komplexný backup, restore a verify pre datacentrá
+- **Funkcie:** Komplexný zálohovanie, obnova a verifikácia pre datacentrá
 - **Architektúra:** Director, Storage Daemon, File Daemon
-- **Link:** [bacula.org](https://www.bacula.org)
+- **Odkaz:** [bacula.org](https://www.bacula.org)
 
 **Zálohovacia stratégia:**
 ```yaml
@@ -386,7 +386,7 @@ Yearly:
 - Monitoring citlivých dát
 - Blokovanie neoprávneného exportu
 
-**Best practices:**
+**Osvedčené postupy:**
 - Pravidelné testovanie restore procedúr
 - Air-gapped backup kópie (offline, mimo dosahu malware)
 - Immutable backups (nelze prepísať ani delete)
@@ -425,7 +425,7 @@ Traditional:           Zero Trust:
   - Password vaulting
 
 - **Identity Governance** - kto má prístup kam
-  - Regular access reviews
+  - Pravidelné kontroly prístupov
   - Least privilege principle
   - Role-based access control (RBAC)
 
@@ -476,7 +476,7 @@ tar -xzf gophish*.tar.gz
 # Navigate to https://localhost:3333
 ```
 
-**Best practices:**
+**Osvedčené postupy:**
 - [Pravidelne audituj svoje vrstvy - chybné konfigurácie často vytvárajú slabé miesta](https://medium.com/infosecmatrix/cybersecurity-layers-explained-defense-in-depth-done-right-97bccd0d92ec)
 - Train your team - ľudská chyba je stále #1 vstupný bod
 - Simuluj útoky pomocou red teaming
@@ -490,25 +490,25 @@ Rok 2026 je o boji AI proti AI. Útočníci používajú machine learning, ty ti
 ### SIEM s AI/ML Capabilities
 
 **Wazuh XDR Platform:**
-- Machine learning pre anomaly detection
-- Automatic correlation pravidiel
-- Threat intelligence integration
+- Strojové učenie pre detekcia anomálií
+- Automatická korelácia pravidiel
+- Integrácia threat intelligence
 
 **Splunk Enterprise Security:**
-- Behavioral analytics
-- Risk-based alerting
-- ML-powered threat detection
+- Behaviorálna analytika
+- Alertovanie založené na riziku
+- Detekcia hrozieb pomocou strojového učenia
 
 ### SOAR (Security Orchestration, Automation & Response)
 
 **Shuffle** - Open-source SOAR [shuffler.io](https://shuffler.io)
-- Workflow automation
+- Automatizácia pracovných postupov
 - Integration s viac ako 200 security tools
-- Playbooks pre incident response
+- Scenáre pre reakciu na incidenty
 
 **TheHive** - Incident Response Platform [thehive-project.org](https://thehive-project.org)
-- Case management
-- Observable analysis
+- Správa prípadov
+- Analýza pozorovateľných udalostí
 - Integration s MISP, Cortex
 
 ### Behaviorálna Analýza
@@ -526,11 +526,11 @@ Machine learning odhaľuje anomálie v správaní:
 ### Scenár 1: Ransomware Útok
 
 **Útočný vektor:**
-1. Phishing email s malicious attachment
-2. User otvorí, payload sa executes
+1. Phishingový email so škodlivou prílohou
+2. Používateľ otvorí, payload sa spustí
 3. Malware začne šifrovať súbory
-4. Lateral movement do network shares
-5. Požiadavka na výkupné v BTC
+4. Laterálny pohyb do sieťových zdieľaní
+5. Požiadavka na výkupné v Bitcoinoch
 
 **Ako Defense in Depth zastaví útok:**
 
@@ -539,10 +539,10 @@ Vrstva 7 (Human):    🛑 Security training - user reportne suspicious email
                      ↓ (Ak prejde)
 Vrstva 3 (Endpoint): 🛑 EDR zachytí abnormal file encryption activity
                      ↓ (Ak prejde)
-Vrstva 2 (Network):  🛑 IDS detekuje communication s C&C server
+Vrstva 2 (Network):  🛑 IDS detekuje komunikácia s riadiacim serverom
                      ↓ (Ak prejde)
-Vrstva 5 (Data):     🛑 Immutable backups umožnia recovery
-                     💾 3-2-1 zálohy - restore bez platenia
+Vrstva 5 (Data):     🛑 Nemenné zálohy umožnia obnovu
+                     💾 3-2-1 zálohy - obnova bez platenia
 ```
 
 **Výsledok:** Útok zastavený na viacerých úrovniach. Aj keby sa dostal k dátam, zálohy zachránia situáciu.
@@ -550,18 +550,18 @@ Vrstva 5 (Data):     🛑 Immutable backups umožnia recovery
 ### Scenár 2: Supply Chain Attack
 
 **Útočný vektor:**
-1. Kompromitácia npm package
-2. Malicious code v dependency
-3. Pull do produkcie pri `npm install`
-4. Exfiltrácia secrets/ENV variables
+1. Kompromitácia npm balíčka
+2. Škodlivý kód v závislosti
+3. Stiahnutie do produkcie pri `npm install`
+4. Exfiltrácia tajomstiev/ENV premenných
 
 **Obrana:**
 ```
 DevSecOps Tools:
   Snyk           → 🛑 Detekuje known vulnerabilities v packages
-  Checkov        → 🛑 IaC misconfigurations
-  Heisenberg     → 🛑 SBOM analýza - identifikuje supply chain risk
-  DefectDojo     → 📊 Centralizované tracking a remediation
+  Checkov        → 🛑 Chybné konfigurácie IaC
+  Heisenberg     → 🛑 SBOM analýza - identifikuje riziko dodávateľského reťazca
+  DefectDojo     → 📊 Centralizované sledovanie a náprava
 ```
 
 ### Scenár 3: Phishing Kampaň
@@ -569,16 +569,16 @@ DevSecOps Tools:
 **Útočný vektor:**
 1. Spear-phishing s deepfake CEO voice message
 2. Link na fake login page
-3. Credential harvesting
-4. Lateral movement s ukradnutými credentials
+3. Zber prihlasovacích údajov
+4. Laterálny pohyb s ukradnutými prihlasovacími údajmi
 
 **Obrana:**
 ```
-Vrstva 7 (Human):    Training + phishing simulácie
+Vrstva 7 (Human):    Školenie + phishingové simulácie
                      ↓
 Vrstva 6 (Identity): 🛑 MFA - ukradnuté heslo nestačí
-                     🛑 Impossible travel detection
-                     🛑 Device fingerprinting
+                     🛑 Detekcia nemožnej cesty
+                     🛑 Odtlačok zariadenia
 ```
 
 ---
@@ -586,11 +586,11 @@ Vrstva 6 (Identity): 🛑 MFA - ukradnuté heslo nestačí
 ## 📚 Rámce a Štandardy
 
 ### NIST Cybersecurity Framework
-- **Identify** - asset management, risk assessment
-- **Protect** - access control, data security
-- **Detect** - anomaly detection, continuous monitoring
-- **Respond** - incident response planning
-- **Recover** - backup a disaster recovery
+- **Identify** - správa aktív, hodnotenie rizík
+- **Protect** - kontrola prístupu, bezpečnosť dát
+- **Detect** - detekcia anomálií, nepretržité monitorovanie
+- **Respond** - plánovanie reakcie na incidenty
+- **Recover** - zálohovanie a obnova po havárii
 
 🔗 [nist.gov/cyberframework](https://www.nist.gov/cyberframework)
 
@@ -632,49 +632,49 @@ Must-know webové zraniteľnosti:
 
 ### 2. Risk Assessment
 - Identifikuj crown jewels (najcennejšie assety)
-- Threat modeling - čo sa môže pokaziť?
-- Vulnerability scanning - kde sú slabiny?
+- Modelovanie hrozieb - čo sa môže pokaziť?
+- Skenovanie zraniteľností - kde sú slabiny?
 
 ### 3. Implementuj Layer-by-Layer
 ```
-Sprint 1: Basic hygiene
-  - Patch management
+Sprint 1: Základná hygiena
+  - Správa aktualizácií
   - Basic firewall
   - Antivirus
 
-Sprint 2: Identity controls
-  - MFA enforcement
-  - Password policy
-  - SSO implementation
+Sprint 2: Kontroly identity
+  - Vynútenie MFA
+  - Politika hesiel
+  - Implementácia SSO
 
-Sprint 3: Detection & Response
-  - SIEM deployment (Wazuh)
-  - Log aggregation
-  - Alerting rules
+Sprint 3: Detekcia a reakcia
+  - Nasadenie SIEM (Wazuh)
+  - Agregácia logov
+  - Pravidlá alertov
 
-Sprint 4: Advanced controls
-  - EDR rollout
-  - Network segmentation
-  - Backup testing
+Sprint 4: Pokročilé kontroly
+  - Nasadenie EDR
+  - Segmentácia siete
+  - Testovanie záloh
 ```
 
 ### 4. Continuous Improvement
-- **Quartly** security assessments
-- **Monthly** vulnerability scans
-- **Weekly** patch cycles
-- **Daily** log review
+- **Quartly** bezpečnostné hodnotenia
+- **Monthly** skenovania zraniteľností
+- **Weekly** cykly aktualizácií
+- **Daily** kontrola logov
 
 ### 5. Test, Test, Test
 ```bash
-# Red Team exercises
-- Penetration testing
-- Social engineering tests
-- Disaster recovery drills
+# Cvičenia Red Teamu
+- Penetračné testovanie
+- Testy sociálneho inžinierstva
+- Cvičenia obnovy po havárii
 
-# Blue Team validation
-- Backup restore tests
-- Incident response tabletops
-- Alert tuning
+# Validácia Blue Teamu
+- Testy obnovy zo záloh
+- Stolové cvičenia reakcie na incidenty
+- Ladenie alertov
 ```
 
 ---
@@ -684,12 +684,12 @@ Sprint 4: Advanced controls
 ### Critical Issues:
 - ❌ **No MFA** - okamžite zapni multi-factor authentication
 - ❌ **No backups** - jeden ransomware a si finished
-- ❌ **Unpatched systems** - known vulnerabilities sú low-hanging fruit
+- ❌ **Unpatched systems** - známe zraniteľnosti sú ľahká korisť
 - ❌ **No monitoring** - ak nevidíš incident, nevieš reagovať
-- ❌ **Shared admin passwords** - receptúra na katastrofu
+- ❌ **Shared admin passwords** - recept na katastrofu
 
-### Quick Wins:
-- ✅ Zapni automatic updates
+### Rýchle víťazstvá:
+- ✅ Zapni automatické aktualizácie
 - ✅ Deploy Wazuh agent na kritické servery
 - ✅ Nastav UFW firewall s default deny
 - ✅ Implementuj Restic backups s 3-2-1 stratégiou
@@ -702,60 +702,60 @@ Sprint 4: Advanced controls
 ### Network Layer
 - [ ] Firewall s default deny policy
 - [ ] IDS/IPS nasadené (Snort/Suricata)
-- [ ] Network segmentation (VLANs)
+- [ ] Segmentácia siete (VLANs)
 - [ ] VPN pre remote access
-- [ ] Regular port scans
+- [ ] Pravidelné skenovania portov
 
 ### Endpoint Layer
 - [ ] EDR agent na všetkých zariadeniach
 - [ ] Antivirus s real-time protection
 - [ ] Full disk encryption
 - [ ] Host-based firewall
-- [ ] Auto-patching enabled
+- [ ] Automatické aktualizácie zapnuté
 
 ### Application Layer
 - [ ] WAF pre web applications
 - [ ] SAST/DAST v CI/CD pipeline
-- [ ] Dependency scanning (Snyk)
-- [ ] API authentication
-- [ ] Input validation
+- [ ] Skenovanie závislostí (Snyk)
+- [ ] API autentifikácia
+- [ ] Validácia vstupov
 
 ### Data Layer
 - [ ] Encryption at rest
-- [ ] TLS/SSL pre transit
+- [ ] TLS/SSL pre prenos
 - [ ] 3-2-1 backup stratégia
-- [ ] Regular restore testing
-- [ ] Immutable/air-gapped backups
+- [ ] Pravidelné testovanie obnovy
+- [ ] Nemenné/oddelené zálohy
 
 ### Identity Layer
 - [ ] MFA na všetky účty
 - [ ] SSO implementované
-- [ ] Password policy (min 12 chars, complexity)
-- [ ] Regular access reviews
-- [ ] Privileged access monitoring
+- [ ] Politika hesiel (min 12 chars, complexity)
+- [ ] Pravidelné kontroly prístupov
+- [ ] Monitorovanie privilegovaného prístupu
 
 ### Human Layer
-- [ ] Quarterly security training
+- [ ] Štvrťročné bezpečnostné školenia
 - [ ] Phishing simulácie
-- [ ] Incident reporting process
-- [ ] Security policies documented
-- [ ] Security champions program
+- [ ] Proces hláse nia incidentov
+- [ ] Zdokumentované bezpečnostné politiky
+- [ ] Program bezpečnostných šampiónov
 
-### Detection & Response
+### Detekcia a reakcia
 - [ ] SIEM deployed (Wazuh)
-- [ ] Log retention 90+ dní
-- [ ] Incident response playbooks
+- [ ] Uchovávanie logov 90+ dní
+- [ ] Scenáre reakcie na incidenty
 - [ ] 24/7 monitoring (or outsourced SOC)
-- [ ] Regular threat hunting
+- [ ] Pravidelné hľadanie hrozieb
 
 ---
 
 ## 🎓 Ďalšie Zdroje
 
 ### Online Kurzy
-- **TryHackMe** - hands-on cybersecurity training [tryhackme.com](https://tryhackme.com)
-- **HackTheBox** - penetration testing labs [hackthebox.com](https://www.hackthebox.com)
-- **SANS Cyber Aces** - free tutorials [cyberaces.org](https://www.cyberaces.org)
+- **TryHackMe** - praktické školenie kybernetickej bezpečnosti [tryhackme.com](https://tryhackme.com)
+- **HackTheBox** - laboratóriá penetračného testovania [hackthebox.com](https://www.hackthebox.com)
+- **SANS Cyber Aces** - bezplatné tutoriály [cyberaces.org](https://www.cyberaces.org)
 
 ### Certifikácie (Worth It)
 - **CEH** (Certified Ethical Hacker)
@@ -765,8 +765,8 @@ Sprint 4: Advanced controls
 
 ### Komunity
 - **r/netsec** - Reddit community
-- **OWASP Slack** - web application security
-- **Blue Team Labs** - defensive security [blueteamlabs.online](https://blueteamlabs.online)
+- **OWASP Slack** - bezpečnosť webových aplikácií
+- **Blue Team Labs** - defenzívna bezpečnosť [blueteamlabs.online](https://blueteamlabs.online)
 
 ### Blogs & News
 - **Krebs on Security** - [krebsonsecurity.com](https://krebsonsecurity.com)
@@ -786,18 +786,18 @@ Kybernetická bezpečnosť nie je sprint, je to maratón. Nie je to produkt, je 
 3. **Zálohy sú poistka** - 3-2-1 pravidlo ti zachráni život pri ransomware
 4. **Zero Trust je nová norma** - never trust, always verify
 5. **Ľudia sú vrstva #1** - investuj do trainingu
-6. **Continuous improvement** - threat landscape sa vyvíja, ty tiež musíš
+6. **Neustále zlepšovanie** - krajina hrozieb sa vyvíja, ty tiež musíš
 
-> "Security is a journey, not a destination. The threats evolve, your defenses must too."
+> "Security is a journey, not a destination. The threats evolve, tvoja obrana tiež musí."
 
-**Next steps:**
+**Ďalšie kroky:**
 1. Sprav inventory svojich assets
 2. Implementuj MFA všade
 3. Nastav monitoring (Wazuh je good start)
 4. Otestuj svoje zálohy
 5. Train your team
 
-Stay paranoid. Stay updated. Stay secure. 🔒
+Zostaň paranoidný. Zostaň aktuálny. Zostaň v bezpečí. 🔒
 
 ---
 

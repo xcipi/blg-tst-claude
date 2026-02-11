@@ -1,25 +1,25 @@
 ---
-title: 'Bezpečné používanie URL shortenerov: Ako zistiť, čo je za linkou'
+title: 'Bezpečné používanie URL shortenerov alebo Ako zistiť, čo je za linkou'
 excerpt: 'Sprievodca bezpečným používaním URL shortenerov. Ako odhaliť phishing linky, preview služby a best practices.'
-date: '2026-02-08'
+date: '2026-02-11'
 readTime: '7 min'
 tags: ['security', 'web', 'best-practices', 'tools']
 ---
 
-# Bezpečné používanie URL shortenerov: Ako zistiť, čo je za linkou
+# Bezpečné používanie URL shortenerov alebo Ako zistiť, čo je za linkou?
 
-URL shortenerů (bit.ly, tinyurl, short.link) sú neoddeliteľnou súčasťou dnešného internetu. Ale ako vieš, kam skutočne vedú? A ako sa chrániť pred phishingom a malwárom?
+URL shortenery (bit.ly, tinyurl, short.link) sú neoddeliteľnou súčasťou dnešného internetu. Ale ako vieš, kam skutočne vedú? A ako sa chrániť pred phishingom a malverom?
 
 ## Prečo sú URL shortenerů nebezpečné?
 
 Skrátené URL skrývajú pôvodnú adresu. To je ideálne pre útočníkov:
 
 - **Phishing**: `https://bit.ly/secure-login-123` môže viesť na falošnú prihlasovaciu stránku
-- **Malware**: Nič ťa nebráni v tom, aby za linkou bola škodlivá stránka
+- **Malware**: Nič nebráni v tom, aby za linkou bola škodlivá stránka
 - **Sledovanie**: Autor linky vidí, kto a kedy ju klikol
-- **URL jacking**: Ak sa doména shortenerů predá, všetky staré linky môžu viesť do nikud
+- **URL jacking**: Ak sa doména shortenerov predá, všetky staré linky môžu viesť nikam
 
-Nedôveruj linkom od neznámych zdrojov. Punkt.
+Nedôveruj linkom od neznámych zdrojov. Shortenerom obzvlášť. Punkt.
 
 ## Ako zistiť, čo je za linkou?
 
@@ -38,16 +38,16 @@ Stačí vložiť skrátený link a vidíš, kam vedie. Funguje s väčšinou sho
 
 ### 2. Inspekcia v prehliadači
 
-Väčšina moderných prehliadačov (Chrome, Firefox, Safari) umožňuje zobraziť preview pri najití myšou na link. Pozri sa do stavového riadku dole – niekedy tam vidíš cieľovú URL.
+Väčšina moderných prehliadačov (Chrome, Firefox, Safari) umožňuje zobraziť preview keď prejdeš myšou na link. Pozri sa do stavového riadku dole – niekedy tam vidíš cieľovú URL.
 
 ```
-💡 Tip: Najdi myšou na skrátenom linku a drž ju. 
+💡 Tip: Prejdi myšou na skrátenom linku a drž ju (neklikaj). 
 Stavový riadok prehliadača by mal zobraziť úplnú adresu.
 ```
 
 ### 3. Programový prístup (pre vývojárov)
 
-Niektoré shortenerů majú verejné API alebo štandardný spôsob expanzie:
+Niektoré shortenery majú verejné API alebo štandardný spôsob expanzie:
 
 ```bash
 # Všeobecný HEAD request (nefunguje vždy)
@@ -56,7 +56,7 @@ curl -I -L "https://bit.ly/example"
 # bit.ly s API
 curl "https://api.bit.ly/v3/expand?short_url=bit.ly/xyz&access_token=YOUR_TOKEN"
 
-# PowerShell verzua
+# PowerShell verzia
 Invoke-WebRequest -Uri "https://bit.ly/example" -MaximumRedirection 0 -ErrorAction SilentlyContinue | 
 Select-Object -ExpandProperty Location
 ```
@@ -71,7 +71,7 @@ tinyurl.com/abc?
 short.link/example+
 ```
 
-Zobrazí ti info o linke bez presmeróvania. Skús to!
+Zobrazí ti info o linke bez presmerovania!
 
 ### 5. WHOIS a DNS lookups
 
@@ -95,23 +95,23 @@ Dostaneš email s linkou: `https://bit.ly/secure-update-2026`
 1. **Neurob hneď:** Neklikaj na ňu
 2. **Skopíruj URL** do preview služby (urlex.org)
 3. **Pozri sa:** Kam skutočne vedie?
-4. **Ověř odesielateľa:** Je email od dôveryhodného zdroja?
-5. **Ak je podozrivá:** Navštív stránku priamo bez linky (napríklad google.com a vyhľadaj)
+4. **Over si odosielateľa linky:** Je email/odkaz z dôveryhodného zdroja?
+5. **Ak je podozrivá:** Navštív stránku priamo bez linky (napríklad https://duckduckgo.com/ a vyhľadaj)
 
 ## Best practices
 
-**✅ Dělaj:**
+**✅ Ako na to:**
 - Použi preview služby pre podozrivé linky
 - Klikaj len na linky od dôveryhodných zdrojov
 - Najdi myšou a pozri sa do stavového riadku
-- Ak linke pochádza z emailu, overi si odesieľateľa (skontroluj e-mailovú adresu!)
-- Buď skeptický voči linkám z sociálnych sietí od neznámych ľudí
+- Ak linka pochádza z emailu, over si odesieľateľa (skontroluj e-mailovú adresu!)
+- Buď skeptický voči linkám zo sociálnych sietí od neznámych ľudí
 
-**❌ Nedělaj:**
+**❌ Nikdy nerob:**
 - Neklikaj na náhodné skrátené linky na sociálnych sieťach
-- Nezdieľaj skrátené linky s citlivými informáciami (hesla, tokeny, interné URLs)
-- Nepoužívaj URL shortenerů na phishing (samozrejmosť, ale hovorím si to)
-- Nepredpokladaj, že skrátená linke od "veriahodného" servisu je bezpečná (aj bit.ly môže hostiť malware)
+- Nikdy nezdieľaj skrátené linky s citlivými informáciami (hesla, tokeny, interné URLs)
+- Nepoužívaj URL shortener linky na phishing (samozrejmosť, ale hovorím si to :)
+- Nikdy nepredpokladaj, že skrátená linke od "dôveryhodnej" služby je bezpečná (aj bit.ly môže hostiť malver)
 
 ## 🛠️ Nástroje a zdroje
 
@@ -168,31 +168,31 @@ print(f'Skutočná URL: {real_url}')
 
 ## Bezpečnosť domén shortenerov
 
-Aj sami shortenerů môžu byť hacovaní. Historické incidenty:
+Aj samotné shortenery môžu byť hacknuté. Historické incidenty:
 
 - **Bit.ly kompromitácia (2011)**: Útočníci mohli vidieť analytiku liniek
 - **TinyURL zneužitie**: Jednotlivé linky viedli na malware
-- **Short.link phishing**: Boli tam falošné domény podobné pôvodnému
+- **Short.link phishing**: Existovali falošné domény podobné pôvodnej
 
-**Záver:** Bezpečnosť skrátnej linky závisí aj od bezpečnosti samotného shortenerů.
+**Záver:** Bezpečnosť skrátnej linky závisí aj od bezpečnosti samotného shortenera.
 
-## Červené vlajeky
+## Červené vlajky
 
 Buď opatrný, ak vidíš:
 
-🚩 Linke z emailu od "banky" – bank nikdy neposiela linky na prihlášenie  
+🚩 Skrátenú linku z emailu od "banky" – banka nikdy takto neposiela linky na prihlásenie  
 🚩 Skrátená linke v SMS správe  
-🚩 Ponuka "klikni tu pre výhra" alebo "tvoje konto je zablokované"  
-🚩 Linke z neznámych zdrojov na sociálnych sieťach  
+🚩 Ponuka "klikni tu pre výhru" alebo "tvoje konto je zablokované"  
+🚩 Linky z neznámych zdrojov na sociálnych sieťach  
 🚩 Neustála ponuka inštalácie čohokoľvek  
 
-Ak máš pochybnosti – neotvárais ju.
+Ak máš pochybnosti – neotváraj ju.
 
 ## Záver
 
-URL shortenerů nie sú sami o sebe nebezpečné – problém je, že môžu skrývať čokoľvek. Buď skeptický, použi preview nástroje a pamätaj si, že najlepšia ochrana je zdravý rozum.
+URL shortenery nie sú sami o sebe nebezpečné – problém je, že môžu skrývať čokoľvek. Buď skeptický, použi preview nástroje a pamätaj si, že najlepšia ochrana je zdravý rozum.
 
-Dostaneš email s podozrivou linkou? Prostá ju neotvárais. 🔒
+Dostaneš email s podozrivou linkou? Proste ju neotváraš. 🔒
 
 ---
 

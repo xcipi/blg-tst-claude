@@ -190,6 +190,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"free-cyber-security-tools-vrstvy-obrany-2026.md": {
+	id: "free-cyber-security-tools-vrstvy-obrany-2026.md";
+  slug: "free-cyber-security-tools-vrstvy-obrany";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"url-shorteners-security.md": {
+	id: "url-shorteners-security.md";
+  slug: "url-shorteners-security";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 };
 
 	};

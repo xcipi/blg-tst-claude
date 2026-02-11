@@ -1,10 +1,9 @@
 ---
 title: 'Bezpečné používanie URL shortenerov: Ako zistiť, čo je za linkou'
-description: 'Sprievodca bezpečným používaním URL shortenerov. Ako odhaliť phishing linky, preview služby a best practices.'
+excerpt: 'Sprievodca bezpečným používaním URL shortenerov. Ako odhaliť phishing linky, preview služby a best practices.'
 date: '2026-02-08'
 readTime: '7 min'
 tags: ['security', 'web', 'best-practices', 'tools']
-slug: 'url-shorteners-security'
 ---
 
 # Bezpečné používanie URL shortenerov: Ako zistiť, čo je za linkou
@@ -57,7 +56,7 @@ curl -I -L "https://bit.ly/example"
 # bit.ly s API
 curl "https://api.bit.ly/v3/expand?short_url=bit.ly/xyz&access_token=YOUR_TOKEN"
 
-# PowerShell verzus
+# PowerShell verzua
 Invoke-WebRequest -Uri "https://bit.ly/example" -MaximumRedirection 0 -ErrorAction SilentlyContinue | 
 Select-Object -ExpandProperty Location
 ```
@@ -101,7 +100,7 @@ Dostaneš email s linkou: `https://bit.ly/secure-update-2026`
 
 ## Best practices
 
-**✅ Dělaj:** 
+**✅ Dělaj:**
 - Použi preview služby pre podozrivé linky
 - Klikaj len na linky od dôveryhodných zdrojov
 - Najdi myšou a pozri sa do stavového riadku
@@ -146,7 +145,7 @@ async function expandUrl(shortUrl) {
 
 // Použitie
 const realUrl = await expandUrl('https://bit.ly/example');
-console.log('Skúočná URL:', realUrl);
+console.log('Skutočná URL:', realUrl);
 ```
 
 ```python
@@ -187,17 +186,17 @@ Buď opatrný, ak vidíš:
 🚩 Linke z neznámych zdrojov na sociálnych sieťach  
 🚩 Neustála ponuka inštalácie čohokoľvek  
 
-Ak máš pochybnosti – neotvárajú ju.
+Ak máš pochybnosti – neotvárais ju.
 
 ## Záver
 
 URL shortenerů nie sú sami o sebe nebezpečné – problém je, že môžu skrývať čokoľvek. Buď skeptický, použi preview nástroje a pamätaj si, že najlepšia ochrana je zdravý rozum.
 
-Dostaneš email s podozrivou linkou? Prostá ju neotvárajú. 🔒
+Dostaneš email s podozrivou linkou? Prostá ju neotvárais. 🔒
 
 ---
 
-**Súvisiace články:**
-- [Phishing: Ako rozpoznať podvod](./phishing-guide)
-- [Bezpečné hesla v roku 2026](./password-security)
-- [VPN a HTTPS: Čo je naozaj bezpečné](./vpn-https-guide)
+## Súvisiace články
+- Phishing: Ako rozpoznať podvod
+- Bezpečné hesla v roku 2026
+- VPN a HTTPS: Čo je naozaj bezpečné

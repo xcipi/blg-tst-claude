@@ -10,7 +10,7 @@ tags: ['security', 'web', 'best-practices', 'tools']
 
 URL shortenery (bit.ly, tinyurl, short.link) sú neoddeliteľnou súčasťou dnešného internetu. Ale ako vieš, kam skutočne vedú? A ako sa chrániť pred phishingom a malverom?
 
-## Prečo sú URL shortenerů nebezpečné?
+## Prečo sú URL shortenery nebezpečné?
 
 Skrátené URL skrývajú pôvodnú adresu. To je ideálne pre útočníkov:
 

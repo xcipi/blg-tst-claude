@@ -1,60 +1,61 @@
 ---
+// Active badges from Credly (non-expired) - generated from badges.json
 const allCerts = [
-  {
-    name: '',
-    url: 'https://www.credly.com/earner/earned/badge/3457cc79-0116-4dfa-9f55-4d911c3531a4',
-    badgeImage: 'https://images.credly.com/size/340x340/images/e1db35be-2f90-4435-bf0f-ac69f3ffbdfc/blob'
-  },
-  {
-    name: '',
-    url: 'https://www.credly.com/earner/earned/badge/71cfdc40-c5bd-4d02-8e80-3151f275d26b',
-    badgeImage: 'https://images.credly.com/size/340x340/images/cd769843-4907-4d1a-9702-0512eb87ae6e/cisco_ccnp_security.png'
-  },
-  {
-    name: '',
-    url: 'https://www.credly.com/earner/earned/badge/95a75c3b-9e01-40ea-9f68-e30c391ac943',
-    badgeImage: 'https://images.credly.com/size/340x340/images/54493e06-3286-4dfc-b0fc-80f3846db491/blob'
-  },
-  {
-    name: '',
-    url: 'https://www.credly.com/earner/earned/badge/bb642c39-3f1b-4d98-9c02-e28ec4542c0b',
-    badgeImage: 'https://images.credly.com/size/340x340/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png'
-  }
+  // Active with expiry
+  { name: 'CCSM', image: 'https://images.credly.com/images/e1db35be-2f90-4435-bf0f-ac69f3ffbdfc/blob' },
+  { name: 'CCTE R81', image: 'https://images.credly.com/images/54493e06-3286-4dfc-b0fc-80f3846db491/blob' },
+  { name: 'CCNP Security', image: 'https://images.credly.com/images/cd769843-4907-4d1a-9702-0512eb87ae6e/cisco_ccnp_security.png' },
+  { name: 'CCNA', image: 'https://images.credly.com/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png' },
+  { name: 'Cisco Specialist - Security Core', image: 'https://images.credly.com/images/aaebeb22-a3d2-48f1-862c-781a39df5837/Cisco_Specialist_600.png' },
+  { name: 'Cisco Specialist - Firewalls', image: 'https://images.credly.com/images/420938f3-faaf-4b84-b1b1-012d1ee4bdc3/blob' },
+  { name: 'Cisco Specialist - VPN', image: 'https://images.credly.com/images/d92cb447-f5b2-4041-9abe-c640b08cc60f/blob' },
+  { name: 'Cisco Specialist - Identity Mgmt', image: 'https://images.credly.com/images/beb33479-dcaf-46b7-baef-20ee3905f03e/blob' },
+  { name: 'Cisco Specialist - Web Security', image: 'https://images.credly.com/images/8e473305-e8dc-4d1a-aecd-dd10bc77163c/Cisco_Specialist_600.png' },
+  { name: 'Quantum Force - Technical', image: 'https://images.credly.com/images/a8ebc54e-d89f-4d85-8aaa-1dacfd94eccd/blob' },
+  { name: 'Quantum Force - Sales', image: 'https://images.credly.com/images/9acfe8b9-386b-439e-b3df-ccf791df963e/blob' },
+  { name: 'Harmony SASE - Technical', image: 'https://images.credly.com/images/dd3391cc-f046-4b7e-ab23-76ce5396a5b1/blob' },
+  { name: 'Harmony SASE - Sales', image: 'https://images.credly.com/images/974cabd8-42c6-46a8-ba80-9343285587ba/blob' },
+  { name: 'CloudGuard WAF - Technical', image: 'https://images.credly.com/images/1762e17f-1dff-43ca-8082-801af3df2b55/blob' },
+  { name: 'CloudGuard WAF - Sales', image: 'https://images.credly.com/images/e6d08969-01d0-4351-8b54-ea137e122197/blob' },
+  { name: 'Fortinet Fundamentals', image: 'https://images.credly.com/images/22a0ece5-ff05-4594-8320-25e55e9ae203/image.png' },
+  { name: 'Broadcom VeloCloud SD-WAN', image: 'https://images.credly.com/images/c0b35182-d736-475b-ae00-f07d4c287496/blob' },
+  // No expiry
+  { name: 'VMware VCP6-NV', image: 'https://images.credly.com/images/dc89c0cb-3605-4e49-92f6-fd8c349a35eb/vmware_Cert_P_NV6.png' },
+  { name: 'VMware vSphere 6.5', image: 'https://images.credly.com/images/081d54b5-d010-4062-a323-b17758606f2a/vmware_knowledge_vsphere6.png' },
+  { name: 'Cisco Network Devices', image: 'https://images.credly.com/images/1442feda-7455-4bcb-a114-8803c9dee675/CV_PNG_L200.png' },
+  { name: 'DemoPoint Rising Star', image: 'https://images.credly.com/images/d596eaa4-4e31-4bc0-bf78-26514e6a576a/Technology_risingstar_badge.png' },
+  { name: 'Innovator', image: 'https://images.credly.com/images/7b186204-144b-4d7c-99d2-fef259500220/e3b2ef746594ace57b855a3aed8adc9f831dc09d.png' },
+  { name: 'Risk Taker', image: 'https://images.credly.com/images/a5c602d7-08aa-4776-9df3-e253b28072cf/17d5ca6b6d2873429eeb45984845d817c45b1e77.png' },
 ];
 ---
 
 <footer class="border-t border-gray-800 bg-[#0a0a0a] py-8">
   <div class="max-w-7xl mx-auto px-4">
-    
-    <!-- Certification Badges -->
-    <div class="flex flex-wrap gap-2 mb-6 opacity-60 hover:opacity-100 transition-opacity">
+
+    <!-- All active certification badges -->
+    <div class="flex flex-wrap gap-2 mb-6 opacity-60 hover:opacity-100 transition-opacity duration-300">
       {allCerts.map(cert => (
         <a
-          href={cert.url}
+          href="https://www.credly.com/users/skipi/badges"
           target="_blank"
           rel="noopener noreferrer"
-          class="group flex items-center gap-2 px-2 py-2 bg-gray-900 border border-gray-800 rounded hover:border-emerald-500 transition-all"
+          class="group"
           title={cert.name}
         >
-          <div class="w-8 h-8 flex-shrink-0 rounded overflow-hidden bg-white">
-            <img 
-              src={cert.badgeImage} 
+          <div class="w-8 h-8 rounded overflow-hidden bg-white hover:scale-110 transition-transform">
+            <img
+              src={cert.image}
               alt={cert.name}
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform"
+              class="w-full h-full object-cover"
             />
           </div>
-          <span class="text-xs text-gray-500 font-mono group-hover:text-emerald-500 transition-colors">
-            {cert.name}
-          </span>
         </a>
       ))}
     </div>
 
     <!-- Copyright -->
-    <div class="text-center">
-      <p class="text-emerald-500 font-mono text-sm">
-        $ echo "© 2026 – built by skypyaq & synovia a dcéry, 2026"
-      </p>
-    </div>
+    <p class="text-emerald-500 font-mono text-sm">
+      $ echo "© 2026 – built with passion"
+    </p>
   </div>
 </footer>

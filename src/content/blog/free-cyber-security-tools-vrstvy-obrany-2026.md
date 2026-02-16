@@ -13,7 +13,7 @@ slug: "free-cyber-security-tools-vrstvy-obrany"
 
 Rok 2026 prináša bezprecedentnú vlnu sofistikovaných kybernetických hrozieb. Útočníci už nie sú len hackeri s klávesnicou - [dnes používajú umelú inteligenciu na napodobňovanie správania používateľov](https://medium.com/infosecmatrix/cybersecurity-layers-explained-defense-in-depth-done-right-97bccd0d92ec) a obchádzanie základnej detekcie. Stretávame sa s:
 
-- **Útoky poháňané AI** - automatizované škálovateľné kampane
+- **Útoky riadené AI** - automatizované škálovateľné kampane
 - **Deepfake sociálne inžinierstvo** - falošné video hovory s vedením firmy
 - **Ransomware ako služba** - kyberzločin ako biznis model
 - **Útoky na dodávateľský reťazec** - kompromitácia cez dodávateľov

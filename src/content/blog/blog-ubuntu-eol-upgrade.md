@@ -5,21 +5,42 @@ date: '2022-09-05'
 readTime: '8 min'
 tags: ['linux', 'ubuntu', 'sysadmin', 'howto']
 ---
+Tento text vychádza z oficiálneho návodu Ubuntu: https://help.ubuntu.com/community/EOLUpgrades
+
+## Časť 0: Je moja distro End Of Life?
+
+Zisti inštalovanú ditribúciu:
+
+```bash
+# cat /etc/os-release
+```
+
+Overenie stavu konkrétnej distro:
+
+https://wiki.ubuntu.com/Releases
+https://ubuntu.com/about/release-cycle
+
+podstatné je označenie "End of Life".
 
 Detailný postup upgrade Ubuntu distribúcie, ktorá už nie je supportovaná (end-of-life), na aktuálnu verziu.
 
-## Časť I: Upgrade z EOL na EOL Distro (pokiaľ je potrebné prejsť cez
-## viacero EOL distros)
+## Časť I: Upgrade z EOL na EOL Distro (pokiaľ je potrebné prejsť cez viacero EOL distros)
 
 ### Príprava
 
 Oprav PPA repozitáre:
-```bash
+
 Uprav /etc/apt/sources.list.d 
+```bash
 # update-manager - uncheck every ppa
 ```
 
 Stiahni upgrade balík pre tvoju distro (napr. `zesty.tar.gz`) a over autenticitu cez GPG súbory.
+
+```bash
+# curl https://old-releases.ubuntu.com/releases/*distroname*
+
+```
 
 ### Modifikácia Upgrade Skriptov
 

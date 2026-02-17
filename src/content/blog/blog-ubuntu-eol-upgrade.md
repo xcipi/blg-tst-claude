@@ -18,6 +18,7 @@ Zisti inštalovanú ditribúciu:
 Overenie stavu konkrétnej distro:
 
 https://wiki.ubuntu.com/Releases
+
 https://ubuntu.com/about/release-cycle
 
 podstatné je označenie "End of Life".

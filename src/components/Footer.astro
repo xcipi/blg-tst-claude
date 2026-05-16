@@ -1,4 +1,8 @@
 ---
+import FeedbackWidget from './FeedbackWidget.astro';
+
+const isAuthenticated = Astro.locals.isAuthenticated || false;
+
 const allCerts = [
   {
     name: '',
@@ -18,7 +22,7 @@ const allCerts = [
   {
     name: '',
     url: 'https://www.credly.com/earner/earned/badge/bb642c39-3f1b-4d98-9c02-e28ec4542c0b',
-    badgeImage: 'https://images.credly.com/size/340x340/images/683783d8-eaac-4c37-a14d-11bd8a36321d/ccna_600.png'
+    badgeImage: 'https://images.credly.com/size/340x340/images/683783d8-eaac-4cc37-a14d-11bd8a36321d/ccna_600.png'
   }
 ];
 ---
@@ -58,3 +62,5 @@ const allCerts = [
     </div>
   </div>
 </footer>
+
+{isAuthenticated && <FeedbackWidget />}

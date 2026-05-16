@@ -24,7 +24,7 @@ const blogPosts = allBlogPosts
   }));
 ---
 
-<Layout title="sec.blog - IT profesionál píšem o veciach, ktoré ma bavia">
+<Layout title="sec.blog - cybersec nerd, píšem o veciach, ktoré ma bavia">
   <NavBar currentPath="/" />
   
   <main class="min-h-screen pt-24 pb-16 px-4">
@@ -41,7 +41,7 @@ const blogPosts = allBlogPosts
           <span class="text-white">ktoré ma bavia</span>
         </h1>
         <p class="text-gray-400 text-lg mb-8 max-w-2xl">
-          Blog o IT, cybersec a všetkom zaujímavom. Zbierka bookmarkov a myšlienok z digitálneho sveta.
+          Blog o IT, cybersec a všetkom zaujímavom. Zbierka bookmarkov a myšlienok z digitálneho sveta...
         </p>
         <div class="flex flex-wrap gap-4">
           <a
@@ -126,6 +126,44 @@ const blogPosts = allBlogPosts
           ))}
         </div>
       </div>
+
+      <!-- Friendly Blogs -->      
+      <div class="mt-16">        
+         <div class="flex items-center gap-2 mb-6">          
+           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-emerald-500"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>          
+           <h2 class="text-2xl font-bold text-white">Spriatelené blogy</h2>        
+         </div>         
+         <div class="flex flex-wrap gap-4">          
+           <a            
+             href="https://psguy.eu"            
+             target="_blank"            
+             rel="noopener noreferrer"            
+             class="group inline-block p-3 bg-[#111111] border border-gray-800 rounded-lg hover:border-emerald-500 transition-all hover:scale-105"            
+             title="psguy.eu"          
+           >            
+             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" width="120" height="48" class="opacity-80 group-hover:opacity-100 transition-opacity">              
+               <!-- Speech bubble shape -->               
+               <rect x="2" y="2" width="180" height="60" rx="10" ry="10"                    
+                     fill="none" stroke="#10b981" stroke-width="3"/>              
+               <!-- Bubble tail -->              
+               <polygon points="20,62 10,78 38,62"                       
+                        fill="#111111" stroke="#10b981" stroke-width="3" stroke-linejoin="round"/>              
+               <!-- >_ prompt icon -->              
+               <text x="16" y="42"                    
+                     font-family="JetBrains Mono, monospace"                     
+                     font-size="26"                    
+                     font-weight="700"                    
+                     fill="#10b981">&gt;_</text>              
+               <!-- PSguy text -->              
+               <text x="72" y="42"                    
+                     font-family="JetBrains Mono, monospace"                    
+                     font-size="24"                    
+                     font-weight="700"                    
+                     fill="#ffffff">PSguy</text>            
+             </svg>          
+           </a>        
+         </div>      
+       </div>	          
 
     </div>
   </main>

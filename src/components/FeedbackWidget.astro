@@ -443,6 +443,9 @@
     flex-shrink: 0;
   }
 
+  /* Hidden attribute fix */
+  [hidden] { display: none !important; }
+
   /* Success */
   .feedback-success {
     padding: 2rem 1rem;
@@ -531,7 +534,7 @@
     // Reset form state
     errorEl.hidden = true;
     successEl.hidden = true;
-    form.style.display = '';
+    form.style.display = 'flex';
     form.reset();
     charCount.textContent = '0';
   }

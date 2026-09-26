@@ -14,8 +14,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     const runtime = locals.runtime as any;
-    const ADMIN_USERNAME = runtime?.env?.ADMIN_USERNAME || 'admin';
-    const ADMIN_PASSWORD = runtime?.env?.ADMIN_PASSWORD || 'admin123';
+    const ADMIN_USERNAME = runtime?.env?.ADMIN_USERNAME;
+    const ADMIN_PASSWORD = runtime?.env?.ADMIN_PASSWORD;
+
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+      console.error('Login error: ADMIN_USERNAME/ADMIN_PASSWORD secrets not configured');
+      return new Response(null, {
+        status: 302,
+        headers: { 'Location': '/login?error=server' }
+      });
+    }
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
       const sessionId = crypto.randomUUID();

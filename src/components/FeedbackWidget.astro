@@ -504,7 +504,9 @@
 </style>
 
 <script>
-  const FEEDBACK_API = 'https://feedback.shadowguide.eu/api/feedback';
+  // Same-origin proxy route (src/pages/api/feedback.ts) - NIE priamo Worker,
+  // pozri komentar v tom subore preco (CF Access cookie cross-domain problem).
+  const FEEDBACK_API = '/api/feedback';
 
   const btn = document.getElementById('feedback-btn')!;
   const overlay = document.getElementById('feedback-overlay')!;

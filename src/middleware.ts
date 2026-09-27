@@ -1,45 +1,40 @@
 import { defineMiddleware } from 'astro:middleware';
+import { jwtVerify, createRemoteJWKSet } from 'jose';
 
 // Cloudflare Access configuration
 const CF_ACCESS_TEAM_DOMAIN = 'skipi.cloudflareaccess.com';
 const CF_ACCESS_AUD = 'ab34bdf31dfb13c031fdab46abe99956d7c80a3f7e25874762f6671c5b907483';
 
+// JWKS client is cheap to construct (jose caches keys internally by URL) and
+// avoids re-parsing the JWKS URL string on every request.
+const JWKS = createRemoteJWKSet(
+  new URL(`https://${CF_ACCESS_TEAM_DOMAIN}/cdn-cgi/access/certs`)
+);
+
 // Helper: Validate Cloudflare Access JWT
+//
+// SECURITY: this MUST cryptographically verify the JWT signature against
+// Cloudflare's published JWKS, not just decode+inspect the unsigned claims.
+// This file previously used atob() to decode the payload and checked only
+// iss/aud/exp without ever verifying the signature - since CF_ACCESS_AUD
+// above is a public, non-secret value (visible in this open-source repo),
+// anyone could have crafted an arbitrary JWT with any email and a matching
+// aud/iss/exp and been treated as an authenticated user by this middleware,
+// on any route Cloudflare Access itself doesn't gate at the edge (this repo's
+// /api/* routes are not edge-protected - see api/feedback.ts and
+// api/auth/login.ts). Fixed 2026-09-27 to mirror the Worker's own (correct)
+// verifyAccessJWT() in blog-pipeline/worker/src/auth.ts.
 async function validateCFAccessToken(token: string): Promise<{ valid: boolean; email?: string }> {
   try {
-    // Decode JWT without verification first to get the header
-    const parts = token.split('.');
-    if (parts.length !== 3) {
+    const { payload } = await jwtVerify(token, JWKS, {
+      issuer: `https://${CF_ACCESS_TEAM_DOMAIN}`,
+      audience: CF_ACCESS_AUD,
+    });
+
+    const email = (payload.email as string | undefined) ?? (payload.sub as string | undefined);
+    if (!email) {
       return { valid: false };
     }
-
-    const payload = JSON.parse(atob(parts[1]));
-    
-    // Check if token is expired
-    const now = Math.floor(Date.now() / 1000);
-    if (payload.exp && payload.exp < now) {
-      console.log('CF Access token expired');
-      return { valid: false };
-    }
-
-    // Verify issuer
-    if (payload.iss !== `https://${CF_ACCESS_TEAM_DOMAIN}`) {
-      console.log('Invalid issuer');
-      return { valid: false };
-    }
-
-    // Verify audience (AUD tag)
-    if (!payload.aud || !payload.aud.includes(CF_ACCESS_AUD)) {
-      console.log('Invalid audience');
-      return { valid: false };
-    }
-
-    // Extract email from token
-    const email = payload.email || payload.sub;
-
-    // TODO: For production, verify signature against CF Access public keys
-    // Fetch keys from: https://skipi.cloudflareaccess.com/cdn-cgi/access/certs
-    // For now, we trust the token if basic checks pass (CF Access already validated it)
 
     return { valid: true, email };
   } catch (error) {

@@ -1,9 +1,9 @@
 ---
 title: "Bezpečné používanie AI vo firme"
-excerpt: "Ako zaviesť AI do firmy bez toho, aby ti unikli dáta alebo aby si dal agentovi kľúče od celého kráľovstva. Hrozby, vrstvy obrany a stack postavený výlučne na open-source nástrojoch."
-tags: ["cybersecurity", "ai", "llm", "enterprise", "owasp", "guardrails", "open-source", "compliance"]
+excerpt: "Ako zaviesť AI do firmy bez toho, aby ti unikli dáta alebo aby si dal agentovi kľúče od celého kráľovstva. Hrozby (OWASP a MITRE ATLAS), identita ľudí aj agentov, vrstvy obrany a stack postavený na open-source nástrojoch."
+tags: ["cybersecurity", "ai", "llm", "enterprise", "owasp", "mitre-atlas", "agent-identity", "guardrails", "open-source", "compliance", "ai-assisted"]
 date: "2026-10-13"
-readTime: "14 min"
+readTime: "18 min"
 slug: "bezpecne-pouzivanie-ai-vo-firme"
 ---
 
@@ -16,6 +16,8 @@ Zamestnanci už AI používajú. Otázka nie je, *či* ju vo firme máš, ale č
 Tento článok nie je návod na zákaz AI. Je o tom, ako ju používať kontrolovane: aké hrozby sú reálne, ktoré vrstvy obrany dávajú zmysel a ako poskladať funkčný základ len z open-source nástrojov, ktorý si môžeš postaviť doma v labe.
 
 Nadväzuje na článok [Free Cyber Security Tools a Vrstvy Obrany](/blog/free-cyber-security-tools-vrstvy-obrany). Princíp je rovnaký: **žiadna vrstva nie je dokonalá, preto ich potrebuješ viac.**
+
+> 🤖 **Vytvorené s pomocou AI.** Tento článok vznikol v spolupráci s AI asistentom Claude (Anthropic). Koncept, výber tém a editorské rozhodnutia sú autorove, rešerš zdrojov a prvý návrh textu pripravila AI. Zdroje sú nalinkované, no príkazy a konfigurácie si pred použitím over a otestuj sám.
 
 ---
 
@@ -47,6 +49,33 @@ Vo firme sa najčastejšie bolí na štyroch miestach:
 
 ---
 
+## Hrozby: MITRE ATLAS
+
+OWASP ti povie, *čo* sa môže pokaziť. [MITRE ATLAS](https://atlas.mitre.org) ti povie, *ako* to útočník robí, krok za krokom. Je to analógia známeho ATT&CK, ale pre systémy s AI: matica taktík a techník, mitigácie a **reálne prípadové štúdie** útokov. Podľa [rozboru Cloud Security Alliance](https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/) mala verzia 5.0 zo septembra 2025 15 taktík, 66 techník a 46 sub-techník a v októbri 2025 pribudlo ďalších 14 techník zameraných na agentov (spolupráca MITRE a Zenity Labs). Presné čísla v aktuálnej verzii si over priamo v katalógu.
+
+**Prečo ho potrebuješ popri OWASP:**
+
+| Otázka | OWASP Top 10 LLM | MITRE ATLAS |
+|---|---|---|
+| Čo to je | Zoznam kategórií rizík | Matica taktík a techník útočníka |
+| Na čo sa hodí | Awareness, priority, kontrolný zoznam | Threat modeling, detekcie, red team plány |
+| Spoločný jazyk s SOC | Slabý | Silný (rovnaká logika ako ATT&CK) |
+| Prípadové štúdie | Nie | Áno, reálne incidenty |
+
+**Ako ho v praxi použiť:**
+
+1. **Threat modeling.** Pre každý AI systém (chatbot, RAG, agent) prejdi taktiky ATLAS a zapíš, ktoré techniky sa ho reálne týkajú. Výstupom je zoznam scenárov, nie všeobecné "bojíme sa prompt injection".
+2. **Mapovanie kontrol.** Ku každej technike priraď kontrolu z tohto článku (gateway, guardrails, oprávnenia agenta, monitoring). Nepokryté techniky sú tvoje medzery.
+3. **Red team.** Nálezy z garak, promptfoo či PyRIT označ ID techniky ATLAS. Správa potom hovorí jazykom, ktorému rozumie aj SOC a manažment.
+4. **Detekcie a incident response.** Pravidlá vo SIEM a runbooky taguj rovnako ako pri ATT&CK. Z prípadových štúdií ATLAS si vezmi hotové scenáre na tabletop cvičenia.
+5. **Agenti.** Rozšírenia z roku 2025 pokrývajú napríklad otrávenie kontextu agenta (`AML.T0080`), zmenu jeho konfigurácie (`AML.T0081`), zber prístupových údajov cez RAG (`AML.T0082`) a exfiltráciu cez volanie nástrojov (`AML.T0086`). Presné ID a názvy si over v katalógu, lebo ich preberám zo sekundárneho zdroja. Ten navyše uvádza, že ATLAS zatiaľ nepokrýva dobre napríklad laterálny pohyb medzi agentmi alebo kompromitáciu MCP servera, takže sa nespoliehaj na úplnosť matice.
+
+Dáta ATLAS sú dostupné aj strojovo čitateľne ([atlas-data na GitHube](https://github.com/mitre-atlas/atlas-data)), takže ich vieš zapojiť do vlastných nástrojov na threat modeling.
+
+**Alternatívy a doplnky:** [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/) · [NIST AI RMF](https://www.nist.gov/itl/ai-risk-management-framework) · [MITRE ATT&CK](https://attack.mitre.org) (pre klasické časti systému) · [Google SAIF](https://saif.google)
+
+---
+
 ## Vrstvy obrany
 
 ```
@@ -65,7 +94,7 @@ Vo firme sa najčastejšie bolí na štyroch miestach:
 ├────────────────────────────────────────────┤
 │  3. DÁTA (klasifikácia, redakcia PII)      │
 ├────────────────────────────────────────────┤
-│  2. IDENTITA A PRÍSTUP                     │
+│  2. IDENTITA (ĽUDIA AJ AGENTI), PRÍSTUP    │
 ├────────────────────────────────────────────┤
 │  1. GOVERNANCE (pravidlá a inventár)       │
 └────────────────────────────────────────────┘
@@ -86,18 +115,37 @@ Rámce, o ktoré sa oplatí oprieť:
 
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework) pre riadenie rizík
 - [ISO/IEC 42001](https://www.iso.org/standard/81230.html) pre systém riadenia AI (certifikovateľný štandard)
-- [MITRE ATLAS](https://atlas.mitre.org) pre katalóg taktík a techník útokov na AI systémy
+- [MITRE ATLAS](https://atlas.mitre.org) pre katalóg taktík a techník útokov na AI systémy (viac v sekcii vyššie)
 
 ---
 
 ## 2. Identita a prístup
 
-Pravidlá sú rovnaké ako všade inde, len sa na ne pri AI často zabúda.
+Pravidlá sú rovnaké ako všade inde, len sa na ne pri AI často zabúda. A pribudla nová otázka: **kto vlastne koná, keď koná agent?**
+
+### Identita ľudí
 
 - **SSO namiesto zdieľaných účtov.** Každá požiadavka na model musí byť priraziteľná konkrétnemu používateľovi.
 - **Kľúče na používateľa alebo tím**, s rozpočtom a obmedzením modelov. Jeden zdieľaný API kľúč v konfiguračnom súbore je presne ten scenár z LLM10.
 - **Prístupové práva v RAG:** dokument, ktorý používateľ nesmie vidieť, sa nesmie dostať ani do kontextu modelu. Model nevie "zabudnúť", čo mu dáš (LLM08). Filtrovanie musí prebehnúť pri vyhľadávaní, nie v odpovedi.
 - **Oddelené prostredia:** experimenty s citlivými dátami patria do lokálnych modelov, nie do verejného API.
+
+### Identita agentov
+
+Agent nie je používateľ a nie je ani obyčajná aplikácia. Je to **nehumánna identita** (NHI), ktorá sa rozhoduje sama, číta nedôveryhodný obsah a môže byť zmanipulovaná. Preto potrebuje vlastný životný cyklus identity, nie požičané heslo kolegu. Najčastejšie chyby sú tieto: agent beží pod osobným tokenom zamestnanca, viac agentov zdieľa jeden servisný účet, kľúč je natvrdo v konfigurácii alebo v systémovom prompte. Výsledok? Po incidente nevieš povedať, *ktorý* agent a v *čijom mene* konal. Katalóg typických rizík nájdeš v [OWASP Non-Human Identities Top 10](https://owasp.org/www-project-non-human-identities-top-10/).
+
+Zásady:
+
+1. **Každý agent má vlastnú identitu.** Samostatný účet či kľúč na agenta (a ideálne na prostredie), nikdy nie zdieľaný. V gateway je to virtuálny kľúč na agenta s vlastným rozpočtom a zoznamom modelov.
+2. **Dve identity v každej akcii: kto a čím.** Pri konaní v mene používateľa nesie požiadavka aj identitu používateľa, aj identitu agenta (delegovanie cez OAuth, napríklad výmena tokenov). Efektívne práva sú **prienik** práv agenta a používateľa, nie ich súčet. Inak sa agent stane cestou na obídenie prístupových práv.
+3. **Krátkodobé a úzko ohraničené poverenia.** Tokeny s krátkou platnosťou, viazané na konkrétnu službu a rozsah (scope). Dlhodobé kľúče len tam, kde sa inak nedá, a s rotáciou.
+4. **Tajomstvá mimo promptu a mimo kódu.** Do trezoru, nie do systémového promptu (LLM07 hovorí, že prompt sa dá vytiahnuť). Agent dostane poverenie až pri volaní nástroja, nie navždy do kontextu.
+5. **MCP a OAuth.** [Špecifikácia MCP pre autorizáciu](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) stavia na OAuth. Dbaj na tokeny viazané na konkrétny server (audience) a nepodsúvaj cez MCP server ďalej cudzie tokeny. Špecifikácia sa vyvíja, čítaj verziu zodpovedajúcu tvojmu klientovi a serveru.
+6. **Identita workloadu.** Pre agentov v kontajneroch či Kubernetes zváž kryptografickú identitu ([SPIFFE/SPIRE](https://spiffe.io)) namiesto statických tajomstiev.
+7. **Životný cyklus.** Každý agent je v inventári (sekcia Governance) s vlastníkom, účelom a dátumom expirácie. Musíš ho vedieť **okamžite odpojiť** (zrušiť kľúč) a pravidelne vyradiť nepoužívané.
+8. **Audit.** Do každého záznamu patrí identita agenta, identita používateľa, nástroj a argumenty (viac v sekcii Monitorovanie).
+
+**Alternatívy a súvisiace nástroje:** FOSS: [Keycloak](https://www.keycloak.org) (IdP/OAuth) · [SPIFFE/SPIRE](https://spiffe.io) (identita workloadov) · [OpenBao](https://openbao.org) (trezor tajomstiev). Komerčné: [Microsoft Entra Agent ID](https://learn.microsoft.com/entra/agent-id) · [Okta](https://www.okta.com) · [HashiCorp Vault](https://www.vaultproject.io)
 
 ---
 
@@ -115,6 +163,8 @@ Presidio rozpoznáva osobné údaje v texte pomocou regulárnych výrazov, NLP, 
 
 - Microsoft [nezaručuje nájdenie všetkých citlivých dát](https://infrabase.ai/blog/llm-guardrails-compared). Je to jedna vrstva, nie celá obrana.
 - Presidio nemá hotovú podporu slovenčiny. Slovenské identifikátory (rodné číslo, IČO, IBAN) si musíš doplniť vlastnými rozpoznávačmi.
+
+**Alternatívy:** FOSS: [scrubadub](https://github.com/LeapBeyond/scrubadub) · [GLiNER](https://github.com/urchade/GLiNER) (NER model, vhodný aj na vlastné entity). Komerčné: [Private AI](https://www.private-ai.com) · [Google Sensitive Data Protection](https://cloud.google.com/sensitive-data-protection) · [Nightfall](https://www.nightfall.ai)
 
 Príklad vlastného rozpoznávača slovenského rodného čísla vrátane kontroly deliteľnosti jedenástimi:
 
@@ -165,7 +215,7 @@ Najdôležitejšie architektonické rozhodnutie: **všetka komunikácia s modelm
 
 ### LiteLLM Proxy
 
-[LiteLLM](https://github.com/BerriAI/litellm) je open-source proxy s API kompatibilným s OpenAI. Spravuje autentifikáciu, vyvažovanie záťaže a [sledovanie nákladov](https://langfuse.com/integrations/gateways/litellm.md) pre viac než sto modelov. Presidio je v ňom zabudnuté ako [guardrail](https://docs.litellm.ai/docs/proxy/guardrails/pii_masking_v2) s režimami `pre_call`, `during_call`, `post_call` a `logging_only`.
+[LiteLLM](https://github.com/BerriAI/litellm) je open-source proxy s API kompatibilným s OpenAI. Spravuje autentifikáciu, vyvažovanie záťaže a [sledovanie nákladov](https://langfuse.com/integrations/gateways/litellm.md) pre viac než sto modelov. Presidio je v ňom zabudované ako [guardrail](https://docs.litellm.ai/docs/proxy/guardrails/pii_masking_v2) s režimami `pre_call`, `during_call`, `post_call` a `logging_only`.
 
 🔗 [litellm.ai](https://litellm.ai)
 
@@ -173,9 +223,13 @@ Najdôležitejšie architektonické rozhodnutie: **všetka komunikácia s modelm
 
 Ukážku kompletného nasadenia nájdeš v sekcii *Praktický stack* nižšie.
 
+**Alternatívy:** FOSS: [Portkey Gateway](https://github.com/Portkey-AI/gateway) · [Envoy AI Gateway](https://github.com/envoyproxy/ai-gateway) · [Kong Gateway (AI plugins)](https://github.com/Kong/kong). Komerčné: [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) · [Kong AI Gateway](https://konghq.com/products/kong-ai-gateway) · [OpenRouter](https://openrouter.ai)
+
 ### NeMo Guardrails: pravidlá správania
 
 [NeMo Guardrails](https://github.com/NVIDIA-NeMo/Guardrails) (Apache 2.0) vkladá medzi aplikáciu a model [päť typov rails](https://oecd.ai/en/catalogue/tools/nvidia-nemoguardrails): vstupné, dialógové, pre vyhľadávanie (RAG), pre vykonávanie akcií a výstupné. Hodí sa tam, kde potrebuješ, aby asistent riešil len určité témy, alebo kde chceš overiť volania nástrojov pred ich vykonaním. Repozitár sa presunul na novú adresu a [v lete 2026 vyšla verzia 0.23.0](https://devtoollab.com/blog/best-llm-guardrails-tools).
+
+**Alternatívy:** FOSS: [Guardrails AI](https://github.com/guardrails-ai/guardrails) · [LlamaFirewall](https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall) · [Llama Guard](https://github.com/meta-llama/PurpleLlama). Komerčné: [Lakera Guard](https://www.lakera.ai) · [Azure AI Content Safety](https://learn.microsoft.com/azure/ai-services/content-safety/) · [Amazon Bedrock Guardrails](https://aws.amazon.com/bedrock/guardrails/)
 
 ---
 
@@ -203,6 +257,8 @@ modelscan -p ./stiahnuty-model.pkl -r json -o scan.json
 ```
 
 Návratový kód 2 znamená, že samotné skenovanie zlyhalo. V CI/CD to ošetri ako **zablokovanie**, nie ako úspech.
+
+**Alternatívy:** FOSS: [Fickling](https://github.com/trailofbits/fickling) · [picklescan](https://github.com/mmaitre314/picklescan). Komerčné: [HiddenLayer](https://hiddenlayer.com) · [Palo Alto Prisma AIRS](https://www.paloaltonetworks.com/prisma/prisma-ai-runtime-security)
 
 Projekt vlastní Protect AI (dnes súčasť Palo Alto Networks). Archivovanie LLM Guard je pripomienka, že aj tu platí pravidlo: sleduj, či je projekt živý.
 
@@ -239,6 +295,8 @@ uvx snyk-agent-scan@latest --skills ~/.claude/skills
 
 **Upozornenie:** kód je open-source, ale podľa [jedného porovnania](https://dev.to/ventrova/sentinel-scan-cli-vs-cisco-mcp-scanner-vs-snyk-agent-scan-comparing-open-source-mcp-security-f5a) dnes beh vyžaduje bezplatný účet Snyk a API token. Ak je pre teba zásadná čistá nezávislosť od tretej strany, hľadaj alternatívy (porovnanie spomína napríklad Cisco mcp-scanner). Skener navyše nenahrádza ochranu za behu: [toxic flows môžu vzniknúť až dynamicky](https://rubinlake.com/en/technology-radar/ai-security-and-governance/agent-scan) z kombinácie nástrojov a dát.
 
+**Alternatívy:** FOSS: [Cisco mcp-scanner](https://github.com/cisco-ai-defense/mcp-scanner) · [Docker MCP Gateway](https://github.com/docker/mcp-gateway). Komerčné: [Zenity](https://zenity.io) · [Lakera](https://www.lakera.ai)
+
 ---
 
 ## 7. Monitorovanie a audit
@@ -249,8 +307,9 @@ Loguj:
 
 - kto, kedy, ktorý model a koľko tokenov,
 - rozhodnutia guardrails (čo bolo zamaskované alebo zablokované),
-- volania nástrojov agentmi vrátane argumentov,
-- anomálie: náhly nárast spotreby, nové modely, neobvyklý čas.
+- volania nástrojov agentmi vrátane argumentov a **identity agenta aj používateľa, v mene ktorého konal**,
+- anomálie: náhly nárast spotreby, nové modely, neobvyklý čas,
+- detekčné pravidlá označ technikami [MITRE ATLAS](https://atlas.mitre.org), nech sa SOC vie orientovať ako pri ATT&CK.
 
 **Nelogu surový obsah bez rozmyslu.** Logy s plným textom promptov sú sami o sebe zásobáreň citlivých dát. Maskuj ich ešte pred zápisom a nastav retenciu.
 
@@ -261,6 +320,8 @@ Loguj:
 🔗 [langfuse.com](https://langfuse.com)
 
 **Licencia:** všetky produktové funkcie sú pod [MIT](https://langfuse.com/handbook/chapters/open-source.md), ale moduly ako SCIM, **audit logy** a politiky uchovávania dát sú pri vlastnom hostovaní pod komerčnou licenciou a vyžadujú licenčný kľúč. Ak potrebuješ nemenný audit v rámci čistého open-source, riešiš ho vlastným logovaním (napríklad logy gateway do centrálneho úložiska).
+
+**Alternatívy:** FOSS: [Arize Phoenix](https://github.com/Arize-ai/phoenix) · [OpenLIT](https://github.com/openlit/openlit) · [Opik](https://github.com/comet-ml/opik). Komerčné: [LangSmith](https://smith.langchain.com) · [Datadog LLM Observability](https://www.datadoghq.com/product/llm-observability/)
 
 ---
 
@@ -287,6 +348,8 @@ python -m garak --target_type openai.OpenAICompatible \
 
 Súbor `gen.json` obsahuje adresu tvojho gateway a kľúč. Presnú štruktúru a názvy prepínačov (v starších verziách `--model_type`) si over v dokumentácii zodpovedajúcej tvojej verzii. Počty testov sa medzi verziami [líšia](https://app.stationx.net/articles/garak-llm-scanner), preto si ich vypíš sám.
 
+**Alternatívy:** FOSS: [PyRIT](https://github.com/Azure/PyRIT) · [DeepTeam](https://github.com/confident-ai/deepteam) · [Giskard](https://github.com/Giskard-AI/giskard). Komerčné: [Mindgard](https://mindgard.ai) · [HiddenLayer](https://hiddenlayer.com) · [Lakera Red](https://www.lakera.ai)
+
 **Tip:** testy sú anglocentrické. Pre slovenský jazyk si pridaj vlastné útočné prompty, lebo filtre často zlyhávajú práve pri iných jazykoch.
 
 ### promptfoo: testy a red teaming v YAML
@@ -301,6 +364,10 @@ npx promptfoo@latest redteam init
 npx promptfoo@latest redteam run
 npx promptfoo@latest view
 ```
+
+**Alternatívy:** FOSS: [DeepEval](https://github.com/confident-ai/deepeval) · [Inspect AI](https://github.com/UKGovernmentBEIS/inspect_ai) · [PyRIT](https://github.com/Azure/PyRIT). Komerčné: [Confident AI](https://www.confident-ai.com) · [Mindgard](https://mindgard.ai)
+
+**Tip k ATLAS:** nálezy z garak či promptfoo spáruj s technikami [MITRE ATLAS](https://atlas.mitre.org) a z prípadových štúdií si vezmi scenáre, ktoré tvoje testy ešte nepokrývajú.
 
 ---
 
@@ -346,6 +413,10 @@ Používateľ ──► Chatovacie rozhranie ──► LiteLLM Proxy ──► O
 ```
 
 **Licenčná poznámka k rozhraniu:** Open WebUI má od verzie 0.6.6 [licenciu BSD-3 s doložkou o zachovaní značky](https://docs.openwebui.com/license/), čo nie je klasická open-source licencia v zmysle OSI. Pre bežné nasadenie bez zmeny značky to nie je problém. Ak potrebuješ striktne OSI-open-source, ako alternatívu zváž [LibreChat](https://github.com/danny-avila/LibreChat) (MIT).
+
+**Alternatívy k rozhraniu:** FOSS: [LibreChat](https://github.com/danny-avila/LibreChat) · [AnythingLLM](https://github.com/Mintplex-Labs/anything-llm) · [Onyx](https://github.com/onyx-dot-app/onyx). Komerčné: [ChatGPT Enterprise](https://openai.com/chatgpt/enterprise/) · [Claude Enterprise](https://www.anthropic.com/enterprise) · [Microsoft 365 Copilot](https://www.microsoft.com/microsoft-365/copilot)
+
+**Alternatívy k Ollama:** FOSS: [llama.cpp](https://github.com/ggml-org/llama.cpp) · [vLLM](https://github.com/vllm-project/vllm) · [LocalAI](https://github.com/mudler/LocalAI). Komerčné: [LM Studio](https://lmstudio.ai)
 
 ### docker-compose.yml
 
@@ -398,7 +469,9 @@ volumes:
   ollama:
 ```
 
-Tajomstvá patria do súboru `.env` mimo repozitára (a do `.gitignore`). Na kontrolu, či sa tam omylom nedostali, použi napríklad [gitleaks](https://github.com/gitleaks/gitleaks) ako pre-commit kontrolu.
+Tajomstvá patria do súboru `.env` mimo repozitára (a do `.gitignore`). Na kontrolu, či sa tam omylom nedostali, použi napríklad [gitleaks](https://github.com/gitleaks/gitleaks) ako pre-commit kontrolu. Gitleaks je podľa autora "feature complete" (len bezpečnostné záplaty), nástupcom je [Betterleaks](https://www.bleepingcomputer.com/news/security/betterleaks-a-new-open-source-secrets-scanner-to-replace-gitleaks/).
+
+**Alternatívy:** FOSS: [TruffleHog](https://github.com/trufflesecurity/trufflehog) · [detect-secrets](https://github.com/Yelp/detect-secrets) · Betterleaks. Komerčné: [GitGuardian](https://www.gitguardian.com) · [GitHub secret scanning](https://docs.github.com/en/code-security/secret-scanning)
 
 ### litellm-config.yaml
 
@@ -448,7 +521,7 @@ Presné názvy kľúčov (`pii_entities_config`, `default_on`) a podporované re
 curl -X POST http://localhost:4000/key/generate \
   -H "Authorization: Bearer $LITELLM_MASTER_KEY" \
   -H "Content-Type: application/json" \
-  -d '{"models": ["lokalny-model"], "max_budget": 5, "metadata": {"user": "jana"}}'
+  -d '{"models": ["lokalny-model"], "max_budget": 5, "metadata": {"user": "jana", "agent": "asistent-faktury"}}'
 
 # Test: e-mail v prompte by mal odísť k modelu zamaskovaný
 curl http://localhost:4000/v1/chat/completions \
@@ -472,6 +545,9 @@ curl http://localhost:4000/v1/chat/completions \
 
 ### Identita a dáta
 - [ ] SSO a kľúče na používateľa s rozpočtom
+- [ ] Každý agent má vlastnú identitu, krátkodobé poverenia a vlastníka
+- [ ] Delegované práva agenta = prienik práv agenta a používateľa
+- [ ] Agenta viem okamžite odpojiť (kill switch)
 - [ ] Prístupové práva uplatnené pri vyhľadávaní v RAG
 - [ ] Redakcia PII vrátane slovenských identifikátorov
 
@@ -486,6 +562,8 @@ curl http://localhost:4000/v1/chat/completions \
 - [ ] Zoznam povolených MCP serverov, pravidelný sken
 
 ### Monitorovanie a testovanie
+- [ ] Threat model AI systémov zmapovaný na MITRE ATLAS
+- [ ] V logoch je identita agenta aj používateľa
 - [ ] Logy bez surového obsahu, s retenciou
 - [ ] Upozornenia na anomálie v spotrebe
 - [ ] Red team testy pri každej zmene modelu či promptu
@@ -503,7 +581,7 @@ Bezpečná AI nie je o jednom nástroji ani o zákaze. Je o tom, že všetka kom
 
 Dve poučenia z príprav tohto článku stoja za zapamätanie. Po prvé, **ekosystém sa mení rýchlo**: LLM Guard bol archivovaný, mcp-scan zmenil majiteľa a názov, promptfoo prešiel pod OpenAI. Pri každom nástroji sleduj, kto ho vlastní a či je živý. Po druhé, **licencie nie sú detail**: Langfuse má audit logy v komerčnej vrstve, Open WebUI má doložku o značke a niektoré funkcie LiteLLM sú platené. Overuj, čo skutočne dostaneš zadarmo.
 
-Začni jednou vrstvou: gateway s maskovaním PII a rozpočtami. Už tá ti dá viditeľnosť a kontrolu, ktoré predtým úplne chýbali.
+Pridaj k tomu identitu agentov a threat model v jazyku MITRE ATLAS. Začni jednou vrstvou: gateway s maskovaním PII a rozpočtami. Už tá ti dá viditeľnosť a kontrolu, ktoré predtým úplne chýbali.
 
 ---
 
@@ -514,7 +592,9 @@ Začni jednou vrstvou: gateway s maskovaním PII a rozpočtami. Už tá ti dá v
 - [OWASP Top 10 LLM 2025 — prehľad](https://docs.modulos.ai/frameworks/owasp-top-10-llm)
 - [NIST AI Risk Management Framework](https://www.nist.gov/itl/ai-risk-management-framework)
 - [ISO/IEC 42001](https://www.iso.org/standard/81230.html)
-- [MITRE ATLAS](https://atlas.mitre.org)
+- [MITRE ATLAS](https://atlas.mitre.org) a [ATLAS v kontexte agentov — CSA](https://labs.cloudsecurityalliance.org/agentic/csa-research-note-atlas-agentic-gap-analysis-20260327/)
+- [OWASP Non-Human Identities Top 10](https://owasp.org/www-project-non-human-identities-top-10/)
+- [MCP — autorizácia](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization)
 
 **Regulácia**
 - [EU AI Act — nariadenie 2024/1689](https://eur-lex.europa.eu/eli/reg/2024/1689/oj)
@@ -541,4 +621,6 @@ Začni jednou vrstvou: gateway s maskovaním PII a rozpočtami. Už tá ti dá v
 
 **Autor:** IT profesionál, nadšenec kybernetickej bezpečnosti  
 **Publikované:** 13. októbra 2026  
-**Tagy:** #cybersecurity #ai #llm #owasp #guardrails #open-source #compliance
+**Aktualizované:** 14. októbra 2026  
+**Vytvorené s pomocou AI:** Claude (Anthropic), editorské rozhodnutia autor  
+**Tagy:** #cybersecurity #ai #llm #owasp #mitre-atlas #agent-identity #guardrails #open-source #compliance #ai-assisted

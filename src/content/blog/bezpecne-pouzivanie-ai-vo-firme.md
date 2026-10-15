@@ -25,18 +25,16 @@ Nadväzuje na článok [Free Cyber Security Tools a Vrstvy Obrany](/blog/free-cy
 
 Dobrým východiskom je [OWASP Top 10 for LLM Applications](https://genai.owasp.org/llm-top-10/). Aktuálna edícia 2025 (v2.0) vyšla [18. novembra 2024](https://docs.modulos.ai/frameworks/owasp-top-10-llm) a označuje riziká ako LLM01 až LLM10:
 
-| ID | Riziko | Čo to znamená v praxi |
-|---|---|---|
-| LLM01 | Prompt injection | Cudzie pokyny prebijú tvoje (priamo alebo cez dokument či web) |
-| LLM02 | Sensitive information disclosure | Model vyzradí dáta, ktoré nemal |
-| LLM03 | Dodávateľský reťazec | Škodlivý model, knižnica alebo plugin |
-| LLM04 | Data and model poisoning | Otrávené trénovacie či RAG dáta |
-| LLM05 | Improper output handling | Výstup modelu sa slepo vykoná alebo vykreslí |
-| LLM06 | Excessive agency | Agent má viac oprávnení, než potrebuje |
-| LLM07 | System prompt leakage | V systémovom prompte nemajú byť tajomstvá |
-| LLM08 | Vector and embedding weaknesses | RAG obchádza prístupové práva |
-| LLM09 | Misinformation | Model si istým tónom vymýšľa |
-| LLM10 | Unbounded consumption | Zneužitie na vyčerpanie rozpočtu alebo kapacity |
+- **LLM01 · Prompt injection**: Cudzie pokyny prebijú tvoje (priamo alebo cez dokument či web)
+- **LLM02 · Sensitive information disclosure**: Model vyzradí dáta, ktoré nemal
+- **LLM03 · Dodávateľský reťazec**: Škodlivý model, knižnica alebo plugin
+- **LLM04 · Data and model poisoning**: Otrávené trénovacie či RAG dáta
+- **LLM05 · Improper output handling**: Výstup modelu sa slepo vykoná alebo vykreslí
+- **LLM06 · Excessive agency**: Agent má viac oprávnení, než potrebuje
+- **LLM07 · System prompt leakage**: V systémovom prompte nemajú byť tajomstvá
+- **LLM08 · Vector and embedding weaknesses**: RAG obchádza prístupové práva
+- **LLM09 · Misinformation**: Model si istým tónom vymýšľa
+- **LLM10 · Unbounded consumption**: Zneužitie na vyčerpanie rozpočtu alebo kapacity
 
 OWASP samo uvádza, že pri [viackrokových autonómnych agentoch](https://docs.modulos.ai/frameworks/owasp-top-10-llm) treba navyše použiť samostatný zoznam *OWASP Top 10 for Agentic Applications*. Edícia 2025 zároveň [rozšírila Excessive Agency](https://opensourcesecurity.substack.com/p/a-deep-dive-into-the-owasp-top-10), lebo agentické architektúry dávajú modelu viac autonómie.
 
@@ -55,12 +53,18 @@ OWASP ti povie, *čo* sa môže pokaziť. [MITRE ATLAS](https://atlas.mitre.org)
 
 **Prečo ho potrebuješ popri OWASP:**
 
-| Otázka | OWASP Top 10 LLM | MITRE ATLAS |
-|---|---|---|
-| Čo to je | Zoznam kategórií rizík | Matica taktík a techník útočníka |
-| Na čo sa hodí | Awareness, priority, kontrolný zoznam | Threat modeling, detekcie, red team plány |
-| Spoločný jazyk s SOC | Slabý | Silný (rovnaká logika ako ATT&CK) |
-| Prípadové štúdie | Nie | Áno, reálne incidenty |
+- **Čo to je**
+  - OWASP: Zoznam kategórií rizík
+  - ATLAS: Matica taktík a techník útočníka
+- **Na čo sa hodí**
+  - OWASP: Awareness, priority, kontrolný zoznam
+  - ATLAS: Threat modeling, detekcie, red team plány
+- **Spoločný jazyk s SOC**
+  - OWASP: Slabý
+  - ATLAS: Silný (rovnaká logika ako ATT&CK)
+- **Prípadové štúdie**
+  - OWASP: Nie
+  - ATLAS: Áno, reálne incidenty
 
 **Ako ho v praxi použiť:**
 

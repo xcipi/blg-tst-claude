@@ -27,11 +27,20 @@ Tento článok nie je návod, ako AI nepoužívať. Je o tom, ako ju používať
 
 Najjednoduchšie pravidlo, ktoré si zapamätáš a použiješ bez premýšľania. Presné rozdelenie ti určí politika tvojej firmy. Toto je východisková kostra.
 
-| Farba | Čo to je | Kam smie |
-|---|---|---|
-| 🔴 **Červená** | heslá, kľúče a tokeny, rodné čísla, čísla kariet, zdravotné údaje, zmluvy s klientmi, nezverejnené finančné výsledky, zdrojový kód klienta | **nikam** mimo schválenej interne prevádzkovanej služby |
-| 🟠 **Oranžová** | interné dokumenty, e-maily s kolegami, zákaznícke dáta bez identifikácie, vlastný (nie klientsky) kód | len **schválený firemný nástroj** |
-| 🟢 **Zelená** | verejné informácie, všeobecné otázky, texty, ktoré by si zverejnil aj tak | akýkoľvek povolený nástroj |
+### 🔴 Červená
+
+- **Čo sem patrí:** heslá, kľúče a tokeny, rodné čísla, čísla kariet, zdravotné údaje, zmluvy s klientmi, nezverejnené finančné výsledky, zdrojový kód klienta
+- **Kam smie:** **nikam** mimo schválenej interne prevádzkovanej služby
+
+### 🟠 Oranžová
+
+- **Čo sem patrí:** interné dokumenty, e-maily s kolegami, zákaznícke dáta bez identifikácie, vlastný (nie klientsky) kód
+- **Kam smie:** len **schválený firemný nástroj**
+
+### 🟢 Zelená
+
+- **Čo sem patrí:** verejné informácie, všeobecné otázky, texty, ktoré by si zverejnil aj tak
+- **Kam smie:** akýkoľvek povolený nástroj
 
 Jednoduchý test pred odoslaním:
 
